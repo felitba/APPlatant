@@ -2,21 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Es importante activar el parámetro usesCleartextTraffic ya a partir de
+     API Level 28 se encuentra por defecto apagado debido que la aplicaciones no
+     deberían manejar tráfico que no sea seguro (HTTPs) y el API por no contar
+     con un certificado solo puede manejar tráfico HTTP -->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".MyApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication"
+        android:theme="@style/Theme.APIMutableStateFlow"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MyApplication">
+            android:theme="@style/Theme.APIMutableStateFlow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

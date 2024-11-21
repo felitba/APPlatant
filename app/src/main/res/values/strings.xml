@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">API MutableStateFlow</string>
+    <string name="login">LOGIN</string>
+    <string name="logout">LOGOUT</string>
+    <string name="get_current_user">GET CURRENT USER</string>
+    <string name="get_all_cards">GET ALL CARDS</string>
+    <string name="add_card">ADD CARD</string>
+    <string name="delete_card">DELETE CARD</string>
 </resources>
