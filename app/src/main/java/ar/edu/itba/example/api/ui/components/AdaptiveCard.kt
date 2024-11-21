@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.itba.example.api.R
-import ar.edu.itba.example.api.ui.theme.AdaptiveTheme
+import ar.edu.itba.example.api.ui.theme.APIMutableStateTheme
 
 @Composable
 fun AdaptiveCard(
@@ -52,7 +52,7 @@ fun AdaptiveCard(
 @Preview(showBackground = true, widthDp = 500)
 @Composable
 fun AdaptiveCardCardSmallPreview() {
-    AdaptiveTheme {
+    APIMutableStateTheme {
         AdaptiveCard(R.string.card_title, R.string.card_description)
     }
 }
@@ -60,7 +60,7 @@ fun AdaptiveCardCardSmallPreview() {
 @Preview(showBackground = true, widthDp = 700)
 @Composable
 fun AdaptiveCardCardPreview() {
-    AdaptiveTheme {
+    APIMutableStateTheme {
         AdaptiveCard(R.string.card_title, R.string.card_description)
     }
 }
