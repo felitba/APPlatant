@@ -63,7 +63,9 @@ fun AdaptiveApp() {
 }
 
 @Preview(device = "spec:width=411dp,height=891dp")
+@Preview(device = "spec:width=800dp,height=1280dp,dpi=240")
 @Composable
 fun AdaptiveAppPreview() {
     AdaptiveApp()
 }
+

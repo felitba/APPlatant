@@ -1,7 +1,7 @@
 package ar.edu.itba.example.api.data.network.api
 
-import ar.edu.itba.example.api.data.network.model.NetworkWalletDetail
 import ar.edu.itba.example.api.data.network.model.NetworkCard
+import ar.edu.itba.example.api.data.network.model.NetworkWalletDetail
 
 import retrofit2.Response
 import retrofit2.http.Body
