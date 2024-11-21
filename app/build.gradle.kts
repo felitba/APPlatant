@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.androidx.adaptive.android)
     implementation(libs.androidx.material3.adaptive.navigation.suite.android)
     implementation(libs.androidx.window.core.android)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
