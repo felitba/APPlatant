@@ -21,6 +21,6 @@ class WalletRemoteDataSource(
     }
 
     companion object {
-        const val DELAY: Long = 3000
+        const val DELAY: Long = 30000
     }
 }
