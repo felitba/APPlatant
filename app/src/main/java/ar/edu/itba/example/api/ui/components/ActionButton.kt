@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 fun ActionButton(
     @StringRes resId: Int,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    icon: @Composable (() -> Unit)? = null
 ) {
     Button(
         modifier = Modifier
@@ -22,10 +23,16 @@ fun ActionButton(
             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
         enabled = enabled,
         onClick = onClick,
-    ) {
-        Text(
-            text = stringResource(resId),
-            modifier = Modifier.padding(8.dp)
-        )
+        content = {
+            if (icon != null) {
+                icon()
+            }
+            else {
+                Text(
+                    text = stringResource(resId),
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+        }
+    )
     }
-}

@@ -2,13 +2,12 @@ package ar.edu.itba.example.api.ui.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -51,7 +50,7 @@ fun HomeScreen(
                     viewModel.logout()
                 })
         }
-        Column(
+        Row(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
@@ -72,41 +71,49 @@ fun HomeScreen(
                             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                         fontSize = 18.sp
                     )
-                    Icon(
+                    ActionButton(
+                        resId = R.string.change_balance,
+                        onClick = {
+                            viewModel.changeBalanceView()
+                        },
+                        icon = {
+                            Icon(
                         imageVector = Icons.Outlined.KeyboardArrowUp,
                         contentDescription = stringResource(id = R.string.balance_amount),
                         modifier = Modifier
-                            .fillMaxWidth()
                             .padding(top = 16.dp, start = 16.dp, end = 16.dp
                             ),
                         tint = MaterialTheme.colorScheme.primary,
-                        onClicked = {
-                            viewModel.changeBalanceView()
+                    )
                         }
                     )
                 }
                 else {
                     Text(
-                        text = "*****.**",
+                        text = "\$*****.**",
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp, start = 16.dp, end = 16.dp),
 
                     )
-                    Icon(
-                        imageVector = Icons.Outlined.ArrowDropDown,
-                        contentDescription = stringResource(id = R.string.balance_amount),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                top = 16.dp, start = 16.dp, end = 16.dp
-                            ),
-                        tint = MaterialTheme.colorScheme.primary,
-                        onclicked = {
+                    ActionButton(
+                        resId = R.string.change_balance,
+                        onClick = {
                             viewModel.changeBalanceView()
-
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Outlined.ArrowDropDown,
+                                contentDescription = stringResource(id = R.string.balance_amount),
+                                modifier = Modifier
+                                    .padding(
+                                        top = 16.dp, start = 16.dp, end = 16.dp
+                                    ),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
                         }
                     )
+//
                 }
             }
             if (uiState.error != null) {

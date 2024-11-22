@@ -16,5 +16,6 @@
     <string name="portrait">Retrato</string>
     <string name="landscape">Paisaje</string>
     <string name="balance_amount">Saldo Disponible</string>
+    <string name="change_balance">Cambiar Visibilidad del Balance</string>
 
 </resources>
