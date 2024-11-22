@@ -10,6 +10,7 @@ import ar.edu.itba.example.api.data.model.Error
 import ar.edu.itba.example.api.data.repository.UserRepository
 import ar.edu.itba.example.api.data.repository.WalletRepository
 import ar.edu.itba.example.api.SessionManager
+import ar.edu.itba.example.api.data.model.Card
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,8 @@ class HomeViewModel(
         }
     }
 
+    /* Login Section */
+
     fun login(username: String, password: String) = runOnViewModelScope(
         {
             userRepository.login(username, password)
@@ -57,18 +60,21 @@ class HomeViewModel(
         }
     )
 
+//    fun getCurrentUser() = runOnViewModelScope(
+//        { userRepository.getCurrentUser(uiState.currentUser == null) },
+//        { state, response -> state.copy(currentUser = response) }
+//    )
 
+/* Deposit Section */
     fun deposit(amount: Double) = runOnViewModelScope(
         {
             walletRepository.deposit(amount)
         },
-        //TODO: seguir desde aca.
+        //TODO: ver si hay que cambiar el state aca.
         { state, _ ->
             state.copy(
-
             )
         }
-
     )
 
     fun changeBalanceView() = runOnViewModelScope(
@@ -77,6 +83,39 @@ class HomeViewModel(
         },
         { state, _ -> state }
     )
+
+    /* Cards Section */
+    //TODO: ver si habria que hacer otro archivo ViewModel, o dejar todo en este esta bien.
+    fun getCards() = runOnViewModelScope(
+        {
+            walletRepository.getCards()
+        },
+        { state, response -> state.copy(cards = response) }
+    )
+
+    fun addCard(card: Card) = runOnViewModelScope(
+        {
+            walletRepository.addCard(card)
+        },
+        { state, response ->
+            state.copy(
+                currentCard = response,
+                cards = null
+            )
+        }
+    )
+
+    fun deleteCard(cardId: Int) = runOnViewModelScope(
+        { walletRepository.deleteCard(cardId) },
+        { state, _ ->
+            state.copy(
+                currentCard = null,
+                cards = null
+            )
+        }
+    )
+
+
 
     private fun observeWalletDetailStream() {
         walletDetailStreamJob = collectOnViewModelScope(

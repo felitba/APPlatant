@@ -3,6 +3,7 @@ package ar.edu.itba.example.api.data.network
 import ar.edu.itba.example.api.data.network.api.UserApiService
 import ar.edu.itba.example.api.data.network.model.NetworkCredentials
 import ar.edu.itba.example.api.SessionManager
+import ar.edu.itba.example.api.data.network.model.NetworkUser
 
 class UserRemoteDataSource(
     private val sessionManager: SessionManager,
@@ -19,5 +20,9 @@ class UserRemoteDataSource(
     suspend fun logout() {
         handleApiResponse { userApiService.logout() }
         sessionManager.removeAuthToken()
+    }
+
+    suspend fun getCurrentUser(): NetworkUser {
+        return handleApiResponse { userApiService.getCurrentUser() }
     }
 }
