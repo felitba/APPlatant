@@ -12,14 +12,14 @@ import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
 
 @Composable
-fun ShoppingScreen() {
+fun PayScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.shopping),
+            text = stringResource(id = R.string.favorite),
             fontSize = 30.sp
         )
     }

@@ -14,10 +14,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.window.core.layout.WindowWidthSizeClass
-import ar.edu.itba.example.api.ui.home.FavoriteScreen
+import ar.edu.itba.example.api.ui.home.CardsScreen
 import ar.edu.itba.example.api.ui.home.HomeScreen
+import ar.edu.itba.example.api.ui.home.PayScreen
 import ar.edu.itba.example.api.ui.home.ProfileScreen
-import ar.edu.itba.example.api.ui.home.ShoppingScreen
 import ar.edu.itba.example.api.ui.navigation.AppDestinations
 import ar.edu.itba.example.api.ui.theme.APIMutableStateTheme
 
@@ -54,8 +54,8 @@ fun AdaptiveApp() {
         ) {
             when (currentDestination) {
                 AppDestinations.HOME -> HomeScreen()
-                AppDestinations.FAVORITE -> FavoriteScreen()
-                AppDestinations.SHOPPING -> ShoppingScreen()
+                AppDestinations.PAY -> PayScreen()
+                AppDestinations.CARDS -> CardsScreen()
                 AppDestinations.PROFILE -> ProfileScreen()
             }
         }

@@ -68,7 +68,7 @@ fun HomeScreen(
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                Row() {
+                //TODO: por alguna razon, cuando uso row se superpone todo y no muestra nada.
                     Text(
                         text = stringResource(id = R.string.balance_amount),
                         modifier = Modifier
@@ -126,7 +126,6 @@ fun HomeScreen(
                                 }
                             )
                         }
-                    }
                 }
                 //TODO: no me deja usar lazyRow somehow... idk
                 Row(Modifier.fillMaxWidth()){
