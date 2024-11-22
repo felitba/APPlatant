@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.data.network.api
 
+import ar.edu.itba.example.api.data.network.model.NetworkAmount
 import ar.edu.itba.example.api.data.network.model.NetworkCard
 import ar.edu.itba.example.api.data.network.model.NetworkWalletDetail
 
@@ -14,6 +15,9 @@ interface WalletApiService {
 
     @GET("wallet/details")
     suspend fun getDetails(): Response<NetworkWalletDetail>
+
+    @POST("wallet/recharge")
+    suspend fun deposit(@Body amount: NetworkAmount): Response<Unit>
 
     @GET("wallet/cards")
     suspend fun getCards(): Response<List<NetworkCard>>

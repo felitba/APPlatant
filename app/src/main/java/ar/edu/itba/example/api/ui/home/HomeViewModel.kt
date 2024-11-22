@@ -57,6 +57,20 @@ class HomeViewModel(
         }
     )
 
+
+    fun deposit(amount: Double) = runOnViewModelScope(
+        {
+            walletRepository.deposit(amount)
+        },
+        //TODO: seguir desde aca.
+        { state, _ ->
+            state.copy(
+
+            )
+        }
+
+    )
+
     fun changeBalanceView() = runOnViewModelScope(
         {
             _uiState.update { currentState -> currentState.copy(showBalance = !currentState.showBalance) }

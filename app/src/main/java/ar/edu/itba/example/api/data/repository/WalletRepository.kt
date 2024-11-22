@@ -15,6 +15,10 @@ class WalletRepository(
         remoteDataSource.walletDetailStream
             .map { it.asModel() }
 
+    suspend fun deposit(amount: Double)  {
+       remoteDataSource.deposit(amount)
+    }
+
     //TODO: add the rest of the card logic.
     //MAKE this Flow type
     // Mutex to make writes to cached values thread-safe.

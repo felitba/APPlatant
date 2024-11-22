@@ -127,13 +127,12 @@ fun HomeScreen(
                             )
                         }
                 }
-                //TODO: no me deja usar lazyRow somehow... idk
                 Row(Modifier.fillMaxWidth()){
-//              LazyRow(){
                         ActionButton(
                             resId = R.string.deposit_money,
                             onClick = {
-//                                viewModel.changeBalanceView()
+                                //TODO: hacerlo dinamico.
+                                viewModel.deposit(100.00)
                             },
                             icon = {
                                 Icon(
@@ -149,7 +148,7 @@ fun HomeScreen(
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {
-//                            viewModel.changeBalanceView()
+                            //TODO: como deberia nevegar desde Home? HomeviewModel no tiene los permisos
                         },
                         icon = {
                             Icon(
@@ -166,7 +165,7 @@ fun HomeScreen(
                     ActionButton(
                         resId = R.string.charge,
                         onClick = {
-//                            viewModel.changeBalanceView()
+                            //
                         },
                         icon = {
                             Icon(
