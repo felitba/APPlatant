@@ -39,9 +39,9 @@ class WalletRemoteDataSource(
         }
     }
 
-    suspend fun getCards() = handleApiResponse {
-        walletApiService.getCards()
-    }
+//    suspend fun getCards() = handleApiResponse {
+//        walletApiService.getCards()
+//    }
 
     suspend fun addCard(card: NetworkCard) = handleApiResponse {
         walletApiService.addCard(card)

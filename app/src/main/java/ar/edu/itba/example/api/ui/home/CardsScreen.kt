@@ -26,12 +26,6 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
 
     Column{
         ActionButton(
-            resId = R.string.get_all_cards,
-            enabled = uiState.canGetAllCards,
-            onClick = {
-                viewModel.getCards()
-            })
-        ActionButton(
             resId = R.string.add_card,
             enabled = uiState.canAddCard,
             onClick = {
@@ -50,6 +44,25 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
                 val currentCard = uiState.currentCard!!
                 viewModel.deleteCard(currentCard.id!!)
             })
+
+        if (uiState.cards != null) {
+//TODO: cambiar esta parte por la componente de la tarjeta.
+            for (card in uiState.cards!!) {
+                Text(
+                    text = card.number,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                    fontSize = 18.sp)
+            }
+            Text(
+                text = "Cards: ${uiState.cards!!.size}",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                fontSize = 18.sp
+            )
+        }
     }
 
     if (uiState.error != null) {

@@ -30,17 +30,17 @@ class WalletRepository(
     // Cache of the latest sports got from the network.
     private var cards: List<Card> = emptyList()
 
-    suspend fun getCards(refresh: Boolean = false): List<Card> {
-        if (refresh || cards.isEmpty()) {
-            val result = remoteDataSource.getCards()
-            // Thread-safe write to sports
-            cardsMutex.withLock {
-                this.cards = result.map { it.asModel() }
-            }
-        }
-
-        return cardsMutex.withLock { this.cards }
-    }
+//    suspend fun getCards(refresh: Boolean = false): List<Card> {
+//        if (refresh || cards.isEmpty()) {
+//            val result = remoteDataSource.getCards()
+//            // Thread-safe write to sports
+//            cardsMutex.withLock {
+//                this.cards = result.map { it.asModel() }
+//            }
+//        }
+//
+//        return cardsMutex.withLock { this.cards }
+//    }
 
     suspend fun addCard(card: Card) : Card {
         val newCard = remoteDataSource.addCard(card.asNetworkModel()).asModel()

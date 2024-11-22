@@ -88,13 +88,13 @@ class HomeViewModel(
     )
 
     /* Cards Section */
-    //TODO: ver si habria que hacer otro archivo ViewModel, o dejar todo en este esta bien.
-    fun getCards() = runOnViewModelScope(
-        {
-            walletRepository.getCards()
-        },
-        { state, response -> state.copy(cards = response) }
-    )
+
+//    fun getCards() = runOnViewModelScope(
+//        {
+//            walletRepository.getCards()
+//        },
+//        { state, response -> state.copy(cards = response) }
+//    )
 
     fun addCard(card: Card) = runOnViewModelScope(
         {
