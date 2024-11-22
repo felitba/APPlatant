@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -48,82 +49,86 @@ fun HomeScreen(
                 resId = R.string.logout,
                 onClick = {
                     viewModel.logout()
-                })
-        }
-        Row(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(
-                text = stringResource(id = R.string.balance_amount),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                fontSize = 18.sp
+                },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = stringResource(id = R.string.logout),
+                    )
+                }
             )
-            if (uiState.walletDetail != null) {
-                //TODO: testearlo... anda muuuy lento el emulador. No lo puedo probar.
-                //TODO: deberia estar en una componente. Pero primero veamos si anda.
-                if (uiState.showBalance) {
-                    Text(
-                        text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                        fontSize = 18.sp
-                    )
-                    ActionButton(
-                        resId = R.string.change_balance,
-                        onClick = {
-                            viewModel.changeBalanceView()
-                        },
-                        icon = {
-                            Icon(
-                        imageVector = Icons.Outlined.KeyboardArrowUp,
-                        contentDescription = stringResource(id = R.string.balance_amount),
-                        modifier = Modifier
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp
-                            ),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                        }
-                    )
-                }
-                else {
-                    Text(
-                        text = "\$*****.**",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
 
-                    )
-                    ActionButton(
-                        resId = R.string.change_balance,
-                        onClick = {
-                            viewModel.changeBalanceView()
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowDropDown,
-                                contentDescription = stringResource(id = R.string.balance_amount),
-                                modifier = Modifier
-                                    .padding(
-                                        top = 16.dp, start = 16.dp, end = 16.dp
-                                    ),
-                                tint = MaterialTheme.colorScheme.primary,
-                            )
-                        }
-                    )
-//
-                }
-            }
-            if (uiState.error != null) {
+
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
                 Text(
-                    text = "${uiState.error!!.code} - ${uiState.error!!.message}",
+                    text = stringResource(id = R.string.balance_amount),
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                     fontSize = 18.sp
                 )
+                if (uiState.walletDetail != null) {
+                    //TODO: deberia estar en una componente.
+                    if (uiState.showBalance) {
+                        Text(
+                            text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                            fontSize = 18.sp
+                        )
+                        ActionButton(
+                            resId = R.string.change_balance,
+                            onClick = {
+                                viewModel.changeBalanceView()
+                            },
+                            // TODO: por alguna razon, no se muestra el icono.
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.KeyboardArrowUp,
+                                    contentDescription = stringResource(id = R.string.balance_amount),
+                                    modifier = Modifier
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                )
+                            }
+                        )
+                    } else {
+                        Text(
+                            text = "\$*****.**",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+
+                            )
+                        ActionButton(
+                            resId = R.string.change_balance,
+                            onClick = {
+                                viewModel.changeBalanceView()
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.ArrowDropDown,
+                                    contentDescription = stringResource(id = R.string.balance_amount),
+                                    modifier = Modifier
+                                        .padding(
+                                            top = 16.dp, start = 16.dp, end = 16.dp
+                                        ),
+                                )
+                            }
+                        )
+                    }
+                }
+                if (uiState.error != null) {
+                    Text(
+                        text = "${uiState.error!!.code} - ${uiState.error!!.message}",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                        fontSize = 18.sp
+                    )
+                }
             }
         }
     }
