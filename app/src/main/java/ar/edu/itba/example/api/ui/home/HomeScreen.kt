@@ -70,75 +70,55 @@ fun HomeScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 //TODO: por alguna razon, cuando uso row se superpone todo y no muestra nada.
-                    Text(
-                        text = stringResource(id = R.string.balance_amount),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                        fontSize = 18.sp
-                    )
-                    if (uiState.walletDetail != null) {
-                        //TODO: deberia estar en una componente.
-                        if (uiState.showBalance) {
-                            Text(
-                                text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                                fontSize = 18.sp
-                            )
-                            ActionButton(
-                                resId = R.string.change_balance,
-                                onClick = {
-                                    viewModel.changeBalanceView()
-                                },
-                                // TODO: Cambiar el icono por un ojo. No lo encuentro.
-                                icon = {
-                                    Icon(
-                                        imageVector = Icons.Outlined.KeyboardArrowUp,
-                                        contentDescription = stringResource(id = R.string.balance_amount),
-                                        modifier = Modifier
-                                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                                    )
-                                }
-                            )
-                        } else {
-                            Text(
-                                text = "\$*****.**",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-
-                                )
-                            ActionButton(
-                                resId = R.string.change_balance,
-                                onClick = {
-                                    viewModel.changeBalanceView()
-                                },
-                                icon = {
-                                    Icon(
-                                        imageVector = Icons.Outlined.ArrowDropDown,
-                                        contentDescription = stringResource(id = R.string.balance_amount),
-                                        modifier = Modifier
-                                            .padding(
-                                                top = 16.dp, start = 16.dp, end = 16.dp
-                                            ),
-                                    )
-                                }
-                            )
-                        }
-                }
-                Row(Modifier.fillMaxWidth()){
+                Text(
+                    text = stringResource(id = R.string.balance_amount),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                    fontSize = 18.sp
+                )
+                if (uiState.walletDetail != null) {
+                    //TODO: deberia estar en una componente.
+                    if (uiState.showBalance) {
+                        Text(
+                            text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                            fontSize = 18.sp
+                        )
                         ActionButton(
-                            resId = R.string.deposit_money,
+                            resId = R.string.change_balance,
                             onClick = {
-                                //TODO: hacerlo dinamico.
-                                viewModel.deposit(100.00)
+                                viewModel.changeBalanceView()
+                            },
+                            // TODO: Cambiar el icono por un ojo. No lo encuentro.
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.KeyboardArrowUp,
+                                    contentDescription = stringResource(id = R.string.balance_amount),
+                                    modifier = Modifier
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                )
+                            }
+                        )
+                    } else {
+                        Text(
+                            text = "\$*****.**",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+
+                            )
+                        ActionButton(
+                            resId = R.string.change_balance,
+                            onClick = {
+                                viewModel.changeBalanceView()
                             },
                             icon = {
                                 Icon(
-                                    imageVector = Icons.Default.AddCircle,
-                                    contentDescription = stringResource(id = R.string.deposit_money),
+                                    imageVector = Icons.Outlined.ArrowDropDown,
+                                    contentDescription = stringResource(id = R.string.balance_amount),
                                     modifier = Modifier
                                         .padding(
                                             top = 16.dp, start = 16.dp, end = 16.dp
@@ -146,6 +126,26 @@ fun HomeScreen(
                                 )
                             }
                         )
+                    }
+                }
+                Row(Modifier.fillMaxWidth()) {
+                    ActionButton(
+                        resId = R.string.deposit_money,
+                        onClick = {
+                            //TODO: hacerlo dinamico.
+                            viewModel.deposit(100.00)
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.AddCircle,
+                                contentDescription = stringResource(id = R.string.deposit_money),
+                                modifier = Modifier
+                                    .padding(
+                                        top = 16.dp, start = 16.dp, end = 16.dp
+                                    ),
+                            )
+                        }
+                    )
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {
@@ -180,36 +180,7 @@ fun HomeScreen(
                         }
                     )
                 }
-                //Only test purposes.
-                Column{
-                    ActionButton(
-                        resId = R.string.get_all_cards,
-                        enabled = uiState.canGetAllCards,
-                        onClick = {
-                            viewModel.getCards()
-                        })
-                    ActionButton(
-                        resId = R.string.add_card,
-                        enabled = uiState.canAddCard,
-                        onClick = {
-                            val random = Random.nextInt(0, 9999)
-                            val card = Card(number = "499003140861${random.toString().padStart(4, '0')}",
-                                fullName = "Christeen Mischke",
-                                expirationDate = "05/28",
-                                cvv = "215",
-                                type = CardType.CREDIT)
-                            viewModel.addCard(card)
-                        })
-                    ActionButton(
-                        resId = R.string.delete_card,
-                        enabled = uiState.canDeleteCard,
-                        onClick = {
-                            val currentCard = uiState.currentCard!!
-                            viewModel.deleteCard(currentCard.id!!)
-                        })
-                }
-
-        }
+            }
             if (uiState.error != null) {
                 Text(
                     text = "${uiState.error!!.code} - ${uiState.error!!.message}",
