@@ -15,6 +15,10 @@ class WalletRepository(
         remoteDataSource.walletDetailStream
             .map { it.asModel() }
 
+//    val walletCardsStream: Flow<Card> =
+//        remoteDataSource.walletCardsStream
+//            .map { it.asModel() }
+
     suspend fun deposit(amount: Double)  {
        remoteDataSource.deposit(amount)
     }

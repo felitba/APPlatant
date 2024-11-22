@@ -115,8 +115,6 @@ class HomeViewModel(
         }
     )
 
-
-
     private fun observeWalletDetailStream() {
         walletDetailStreamJob = collectOnViewModelScope(
             walletRepository.walletDetailStream
