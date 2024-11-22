@@ -16,5 +16,9 @@
     <string name="landscape">Landscape</string>
     <string name="balance_amount">Balance Available</string>
     <string name="change_balance">Change Balance Visibility</string>
+    <string name="deposit_money">Deposit Money</string>
+    <string name="pay">Pay</string>
+    <string name="charge">Charge</string>
+
 
 </resources>
