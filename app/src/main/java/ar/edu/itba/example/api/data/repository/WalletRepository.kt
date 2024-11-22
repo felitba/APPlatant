@@ -4,6 +4,7 @@ import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.WalletDetail
 import ar.edu.itba.example.api.data.network.WalletRemoteDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -15,9 +16,9 @@ class WalletRepository(
         remoteDataSource.walletDetailStream
             .map { it.asModel() }
 
-//    val walletCardsStream: Flow<Card> =
-//        remoteDataSource.walletCardsStream
-//            .map { it.asModel() }
+    val walletCardsStream: Flow<List<Card>> =
+        remoteDataSource.walletCardsStream
+            .map { list -> list.map { it.asModel() } }
 
     suspend fun deposit(amount: Double)  {
        remoteDataSource.deposit(amount)
