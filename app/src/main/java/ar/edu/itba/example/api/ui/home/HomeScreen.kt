@@ -1,17 +1,25 @@
 package ar.edu.itba.example.api.ui.home
 
+import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.outlined.ArrowDropDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -47,27 +55,59 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = "Wallet Detail:",
+                text = stringResource(id = R.string.balance_amount),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 fontSize = 18.sp
             )
             if (uiState.walletDetail != null) {
-                Text(
-                    text = "Balance: \$${uiState.walletDetail?.balance ?: "Unknown"}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                    fontSize = 18.sp
-                )
-                Text(
-                    text = "Invested: \$${uiState.walletDetail?.invested ?: "Unknown"}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                    fontSize = 18.sp
-                )
+                //TODO: testearlo... anda muuuy lento el emulador. No lo puedo probar.
+                //TODO: deberia estar en una componente. Pero primero veamos si anda.
+                if (uiState.showBalance) {
+                    Text(
+                        text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                        fontSize = 18.sp
+                    )
+                    Icon(
+                        imageVector = Icons.Outlined.KeyboardArrowUp,
+                        contentDescription = stringResource(id = R.string.balance_amount),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp
+                            ),
+                        tint = MaterialTheme.colorScheme.primary,
+                        onClicked = {
+                            viewModel.changeBalanceView()
+                        }
+                    )
+                }
+                else {
+                    Text(
+                        text = "*****.**",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+
+                    )
+                    Icon(
+                        imageVector = Icons.Outlined.ArrowDropDown,
+                        contentDescription = stringResource(id = R.string.balance_amount),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                top = 16.dp, start = 16.dp, end = 16.dp
+                            ),
+                        tint = MaterialTheme.colorScheme.primary,
+                        onclicked = {
+                            viewModel.changeBalanceView()
+
+                        }
+                    )
+                }
             }
             if (uiState.error != null) {
                 Text(

@@ -14,5 +14,6 @@
     <string name="card_description">Card Description</string>
     <string name="portrait">Portrait</string>
     <string name="landscape">Landscape</string>
+    <string name="balance_amount">Balance Available</string>
 
 </resources>

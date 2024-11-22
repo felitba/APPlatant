@@ -7,5 +7,6 @@ data class HomeUiState(
     val isAuthenticated: Boolean = false,
     val isFetching: Boolean = false,
     val walletDetail: WalletDetail? = null,
-    val error: Error? = null
+    val error: Error? = null,
+    val showBalance : Boolean = true
 )

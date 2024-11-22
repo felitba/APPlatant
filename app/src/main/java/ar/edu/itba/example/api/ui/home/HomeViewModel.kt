@@ -57,6 +57,13 @@ class HomeViewModel(
         }
     )
 
+    fun changeBalanceView() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(showBalance = !currentState.showBalance) }
+        },
+        { state, _ -> state }
+    )
+
     private fun observeWalletDetailStream() {
         walletDetailStreamJob = collectOnViewModelScope(
             walletRepository.walletDetailStream
