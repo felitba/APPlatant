@@ -11,19 +11,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
-import ar.edu.itba.example.api.ui.home.FavoriteScreen
-import ar.edu.itba.example.api.ui.home.HomeScreen
-import ar.edu.itba.example.api.ui.home.ProfileScreen
-import ar.edu.itba.example.api.ui.home.ShoppingScreen
+import ar.edu.itba.example.api.MyApplication
+import ar.edu.itba.example.api.ui.home.HomeViewModel
 import ar.edu.itba.example.api.ui.navigation.AppDestinations
+import ar.edu.itba.example.api.ui.navigation.AppNavGraph
 import ar.edu.itba.example.api.ui.theme.APIMutableStateTheme
 
 @Composable
-fun AdaptiveApp() {
+fun AppPlatant(
+    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
+) {
     APIMutableStateTheme {
+
+        val navController = rememberNavController()
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+
         val adaptiveInfo = currentWindowAdaptiveInfo()
         val customNavSuiteType = with(adaptiveInfo) {
             if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM) {
@@ -34,9 +43,16 @@ fun AdaptiveApp() {
         }
         var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
 
+        val items = listOf(
+            AppDestinations.HOME,
+            AppDestinations.FAVORITE,
+            AppDestinations.PROFILE,
+            AppDestinations.SHOPPING
+        )
+
         NavigationSuiteScaffold(
             navigationSuiteItems = {
-                AppDestinations.entries.forEach {
+                items.forEach {
                     item(
                         icon = {
                             Icon(
@@ -50,22 +66,16 @@ fun AdaptiveApp() {
                     )
                 }
             },
-            layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+            layoutType = customNavSuiteType
         ) {
-            when (currentDestination) {
-                AppDestinations.HOME -> HomeScreen()
-                AppDestinations.FAVORITE -> FavoriteScreen()
-                AppDestinations.SHOPPING -> ShoppingScreen()
-                AppDestinations.PROFILE -> ProfileScreen()
-            }
+            AppNavGraph(navController = navController, viewModel = viewModel)
         }
     }
 }
 
-@Preview(device = "spec:width=411dp,height=891dp")
-@Preview(device = "spec:width=800dp,height=1280dp,dpi=240")
+@PreviewScreenSizes
 @Composable
 fun AdaptiveAppPreview() {
-    AdaptiveApp()
+    AppPlatant()
 }
 

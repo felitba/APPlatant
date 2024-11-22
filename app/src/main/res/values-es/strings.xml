@@ -8,6 +8,7 @@
     <string name="add_card">Añadir tarjeta</string>
     <string name="delete_card">Eliminar tarjeta</string>
     <string name="home">Inicio</string>
+    <string name="cards">Tarjetas</string>
     <string name="favorite">Favoritos</string>
     <string name="shopping">Shopping</string>
     <string name="profile">Perfil</string>

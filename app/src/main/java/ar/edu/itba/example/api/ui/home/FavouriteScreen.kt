@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
 
 @Composable
-fun FavoriteScreen() {
+fun FavouriteScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
