@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">API MutableStateFlow</string>
-    <string name="login">LOGIN</string>
-    <string name="logout">LOGOUT</string>
+    <string name="app_name">Platant</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="get_current_user">GET CURRENT USER</string>
     <string name="get_all_cards">GET ALL CARDS</string>
-    <string name="add_card">ADD CARD</string>
-    <string name="delete_card">DELETE CARD</string>
-    <string name = "home">Home</string>
+    <string name="add_card">Add card</string>
+    <string name="delete_card">Delete card</string>
+    <string name="home">Home</string>
     <string name="favorite">Favorite</string>
     <string name="shopping">Shopping</string>
     <string name="profile">Profile</string>
