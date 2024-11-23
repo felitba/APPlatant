@@ -1,6 +1,7 @@
 package ar.edu.itba.example.api.ui.components
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,7 @@ import kotlin.random.Random
 
 @Composable
 fun AdaptiveCard(
-    Card : Card,
+    card : Card,
 ) {
     BoxWithConstraints {
         if (maxWidth < 600.dp) {
@@ -34,15 +35,28 @@ fun AdaptiveCard(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(10.dp)
                 ) {
-                    Column {
-                        Text(text = Card.type.toString())
-                        Text(text = Card.number)
-                        Row {
-                            Text(text = "Exp Date")
-                            Text(text = Card.expirationDate)
+                    Column(
+                        modifier = Modifier.padding(top = 5.dp)
+                    ) {
+                        Text(text = card.type.toString())
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            ){
+                            for (i in 0..3) {
+                                Text(text = card.number.substring(i*4, i*4+4))
+                            }
+                            }
+                        Row(
+                            modifier = Modifier.padding(top = 5.dp)
+                        ) {
+                            Text(text = "Exp Date: ")
+                            Text(text = card.expirationDate)
                         }
-                        Row {
-                            Text(text = Card.fullName)
+                        Row(
+                            modifier = Modifier.padding(top = 5.dp),
+                            horizontalArrangement = Arrangement.spacedBy(15.dp),
+                            ) {
+                            Text(text = card.fullName)
                             //TODO: cambiar por el logo de Visa, mastercard, o lo que sea.
                             Icon(imageVector = Icons.Filled.Face, contentDescription = null)
                         }
@@ -54,20 +68,34 @@ fun AdaptiveCard(
         } else {
             Card {
                 Row(modifier = Modifier.padding(10.dp)) {
-                    Column {
-                        Text(text = Card.type.toString())
-                        Text(text = Card.number)
-                        Row {
-                            Text(text = "Exp Date: ")
-                            Text(text = Card.expirationDate)
+                    Column(
+                        modifier = Modifier.padding(top = 5.dp)
+                    ) {
+                        Text(text = card.type.toString())
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ){
+                            for (i in 0..3) {
+                                Text(text = card.number.substring(i*4, i*4+4))
+                            }
                         }
-                        Row {
-//                            Spacer(modifier = Modifier.weight(0.5f))
-                            Text(text = Card.fullName)
+                        Row(
+                            modifier = Modifier.padding(top = 5.dp)
+                        ) {
+                            Text(text = "Exp Date: ")
+                            Text(text = card.expirationDate)
+                        }
+                        Row(
+                            modifier = Modifier.padding(top = 5.dp),
+                            horizontalArrangement = Arrangement.spacedBy(15.dp),
+                        ) {
+                            Text(text = card.fullName)
                             //TODO: cambiar por el logo de Visa, mastercard, o lo que sea.
                             Icon(imageVector = Icons.Filled.Face, contentDescription = null)
                         }
+
                     }
+
                 }
             }
         }
