@@ -150,7 +150,7 @@ fun HomeScreen(
                 ) {
                     var depositAmount by remember { mutableStateOf("") }
                     ActionButton(
-                        resId = R.string.deposit_money,
+                        resId = R.string.deposit,
                         onClick = {
                             viewModel.changeIsWritingAmount()
                         },
@@ -163,7 +163,8 @@ fun HomeScreen(
                                         top = 16.dp, start = 16.dp, end = 16.dp
                                     ),
                             )
-                        }
+                        },
+                        displayText = true
                     )
                     if (uiState.isWriting) {
                         AlertDialog(
@@ -224,7 +225,8 @@ fun HomeScreen(
                                         top = 16.dp, start = 16.dp, end = 16.dp
                                     ),
                             )
-                        }
+                        },
+                        displayText = true
                     )
                     //TODO: definir si vamos a implementar cobrar o no.
                     ActionButton(
@@ -241,7 +243,8 @@ fun HomeScreen(
                                         top = 16.dp, start = 16.dp, end = 16.dp
                                     ),
                             )
-                        }
+                        },
+                        displayText = true
                     )
                 }
             }

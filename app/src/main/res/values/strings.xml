@@ -24,5 +24,6 @@
     <string name="enter_amount">Enter Amount</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="deposit">Deposit</string>
 
 </resources>
