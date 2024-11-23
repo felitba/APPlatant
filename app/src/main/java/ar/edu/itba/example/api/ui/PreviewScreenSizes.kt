@@ -1,4 +1,4 @@
-package ar.edu.itba.example.compose
+package ar.edu.itba.example.api.ui
 
 import androidx.compose.ui.tooling.preview.Preview
 

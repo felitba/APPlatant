@@ -26,8 +26,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import ar.edu.itba.example.api.MyApplication
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.CardType
@@ -36,7 +34,7 @@ import kotlin.random.Random
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
+    viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
