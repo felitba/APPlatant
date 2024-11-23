@@ -7,14 +7,10 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
 import ar.edu.itba.example.api.MyApplication
@@ -30,8 +26,6 @@ fun AppPlatant(
     APIMutableStateTheme {
 
         val navController = rememberNavController()
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
 
         val adaptiveInfo = currentWindowAdaptiveInfo()
         val customNavSuiteType = with(adaptiveInfo) {
@@ -41,7 +35,6 @@ fun AppPlatant(
                 NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
             }
         }
-        var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
 
         val items = listOf(
             AppDestinations.HOME,
@@ -61,8 +54,17 @@ fun AppPlatant(
                             )
                         },
                         label = { Text(stringResource(it.label)) },
-                        selected = it == currentDestination,
-                        onClick = { currentDestination = it }
+                        alwaysShowLabel = true,
+                        selected = it.route == navController.currentBackStackEntry?.destination?.route,
+                        onClick = {
+                            navController.navigate(it.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
                     )
                 }
             },
