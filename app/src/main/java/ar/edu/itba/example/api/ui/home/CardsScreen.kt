@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -61,10 +62,11 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
 
             LazyVerticalGrid(
                 contentPadding = PaddingValues(horizontal = mediumPadding),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
+//                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.width(120.dp),
-                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxWidth(),
+                columns = GridCells.Fixed(1),
+                userScrollEnabled = true
             )
                 {
                     when {
