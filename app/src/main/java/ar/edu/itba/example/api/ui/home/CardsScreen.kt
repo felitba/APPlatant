@@ -27,6 +27,13 @@ import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.components.ActionButton
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Icon
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
 
@@ -39,6 +46,16 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
         ActionButton(
             resId = R.string.add_card,
             enabled = uiState.canAddCard,
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(id = R.string.add_card),
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp, start = 16.dp, end = 16.dp
+                        ),
+                )
+            },
             onClick = {
                 val random = Random.nextInt(0, 9999)
                 val card = Card(number = "499003140861${random.toString().padStart(4, '0')}",
@@ -51,6 +68,16 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
         ActionButton(
             resId = R.string.delete_card,
             enabled = uiState.canDeleteCard,
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = stringResource(id = R.string.delete_card),
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp, start = 16.dp, end = 16.dp
+                        ),
+                )
+            },
             onClick = {
                 val currentCard = uiState.currentCard!!
                 viewModel.deleteCard(currentCard.id!!)
@@ -58,28 +85,23 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
 
         if (uiState.cards != null) {
 
-            val mediumPadding = dimensionResource(R.dimen.medium_padding)
+                val mediumPadding = dimensionResource(R.dimen.medium_padding)
 
-            LazyVerticalGrid(
-                contentPadding = PaddingValues(horizontal = mediumPadding),
-//                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth(),
-                columns = GridCells.Fixed(1),
-                userScrollEnabled = true
-            )
+                LazyVerticalGrid(
+                    contentPadding = PaddingValues(horizontal = mediumPadding),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    columns = GridCells.Fixed(1),
+                    userScrollEnabled = true
+                )
                 {
                     when {
-                        uiState.cards == null -> {
-                            item {
-                                Text("Loading data...", Modifier.padding(16.dp))
-                            }
-                        }
                         uiState.cards!!.isEmpty() -> {
                             item {
                                 Text("No cards available", Modifier.padding(16.dp))
                             }
                         }
+
                         else -> {
                             items(items = uiState.cards!!) { item ->
                                 //TODO: cambiar esta parte por la componente de la tarjeta.
@@ -87,15 +109,19 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
                             }
                         }
                     }
+                    item {
+                        Text(
+                            text = "Total Cards: ${uiState.cards!!.size}",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                            fontSize = 18.sp
+                        )
+                    }
                 }
-
-            Text(
-                text = "Total Cards: ${uiState.cards!!.size}",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                fontSize = 18.sp
-            )
+        }
+        else {
+            Text("Loading data...", Modifier.padding(16.dp))
         }
     }
 
