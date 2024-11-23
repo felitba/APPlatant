@@ -40,7 +40,8 @@ import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
 
 @Composable
-fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.provideFactory(LocalContext.current.applicationContext as MyApplication))
+fun CardsScreen(
+    viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 

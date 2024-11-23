@@ -26,7 +26,7 @@ fun AppNavGraph(
             HomeScreen(viewModel)
         }
         composable(route = AppDestinations.CARDS.route) {
-            CardsScreen()
+            CardsScreen(viewModel)
         }
         composable(route = AppDestinations.PROFILE.route) {
             ProfileScreen()
