@@ -25,5 +25,8 @@
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
     <string name="deposit">Deposit</string>
-
+    <string name="metodos_de_pago">Payment Methods:</string>
+    <string name="quantity">Amount:</string>
+    <string name="cvu">cvu or alias</string>
+    <string name="qr">QR code</string>
 </resources>

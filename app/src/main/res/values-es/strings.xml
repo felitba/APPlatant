@@ -26,6 +26,8 @@
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
     <string name="deposit">Depositar</string>
-
-
+    <string name="metodos_de_pago">Metodos de Pago:</string>
+    <string name="quantity">Monto:</string>
+    <string name="cvu">cvu o alias</string>
+    <string name="qr">Codigo QR</string>
 </resources>
