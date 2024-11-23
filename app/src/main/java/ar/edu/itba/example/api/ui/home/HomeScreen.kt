@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,14 +16,16 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
@@ -38,10 +41,12 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
+            .background(MaterialTheme.colorScheme.onBackground)
     ) {
         Column(
             modifier = Modifier.align(alignment = Alignment.End)
         ) {
+            //TODO: cuando loginScreen este hecha sacar esto.
             if (!uiState.isAuthenticated) {
                 ActionButton(
                     resId = R.string.login,
@@ -71,12 +76,13 @@ fun HomeScreen(
                 Text(
                     text = stringResource(id = R.string.balance_amount),
                     modifier = Modifier
-//                                .fillMaxWidth()
-                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                    fontSize = 18.sp
+                        //TODO: cambiar el color, tipografia, padding con Theme.kt.
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                        .background(colorScheme.onBackground),
+                    fontSize = 24.sp,
+                    color = MaterialTheme.colorScheme.secondary
                 )
                 Row(
-//                    modifier = Modifier.fillMaxWidth()
                 ) {
                         if (uiState.walletDetail != null) {
                             //TODO: deberia estar en una componente.
@@ -84,9 +90,9 @@ fun HomeScreen(
                                 Text(
                                     text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
                                     modifier = Modifier
-//                                        .fillMaxWidth()
-                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                                    fontSize = 18.sp
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                                    fontSize = 36.sp,
+                                    color = MaterialTheme.colorScheme.secondary
                                 )
                                 ActionButton(
                                     resId = R.string.change_balance,
@@ -99,7 +105,7 @@ fun HomeScreen(
                                             imageVector = Icons.Outlined.KeyboardArrowUp,
                                             contentDescription = stringResource(id = R.string.balance_amount),
                                             modifier = Modifier
-                                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                                .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
                                         )
                                     }
                                 )
@@ -107,10 +113,11 @@ fun HomeScreen(
                                 Text(
                                     text = "\$*****.**",
                                     modifier = Modifier
-//                                        .fillMaxWidth()
-                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
+                                    fontSize = 36.sp,
+                                    color = colorScheme.secondary
 
-                                    )
+                                )
                                 ActionButton(
                                     resId = R.string.change_balance,
                                     onClick = {
@@ -122,7 +129,7 @@ fun HomeScreen(
                                             contentDescription = stringResource(id = R.string.balance_amount),
                                             modifier = Modifier
                                                 .padding(
-                                                    top = 16.dp, start = 16.dp, end = 16.dp
+                                                    top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp
                                                 ),
                                         )
                                     }
@@ -130,7 +137,11 @@ fun HomeScreen(
                     }
                 }
                 }
-                Row(Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = colorScheme.background)
+                ) {
                     ActionButton(
                         resId = R.string.deposit_money,
                         onClick = {
