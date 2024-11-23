@@ -65,9 +65,24 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
                 modifier = Modifier.height(120.dp)
             )
                 {
-                    items(items = uiState.cards!!) { item ->
-                        //TODO: cambiar esta parte por la componente de la tarjeta.
-                        Text( text = item.number, Modifier.height(56.dp))
+                    when {
+                        uiState.cards == null -> {
+                            item {
+                                Text("Loading data...", Modifier.padding(16.dp))
+                            }
+                        }
+                        uiState.cards!!.isEmpty() -> {
+                            item {
+                                Text("No cards available", Modifier.padding(16.dp))
+                            }
+                        }
+                        else -> {
+                            items(items = uiState.cards!!) { item ->
+                                //TODO: cambiar esta parte por la componente de la tarjeta.
+
+                                Text(text = item.number, Modifier.height(56.dp))
+                            }
+                        }
                     }
                 }
 

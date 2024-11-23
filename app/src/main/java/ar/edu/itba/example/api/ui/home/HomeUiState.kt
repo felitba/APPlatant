@@ -12,7 +12,7 @@ data class HomeUiState(
     val walletDetail: WalletDetail? = null,
     val error: Error? = null,
     val showBalance : Boolean = true,
-    val cards: List<Card>? = null,
+    val cards: List<Card>? = emptyList(),
     val currentCard: Card? = null
 )
 
