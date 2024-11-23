@@ -17,7 +17,7 @@ enum class AppDestinations(
     val route: String
 ) {
     HOME(R.string.home, Icons.Default.Home, R.string.home, "home"),
-    PAY(R.string.pay, Icons.AutoMirrored.Outlined.Send, R.string.pay, "pay),
+    PAY(R.string.pay, Icons.AutoMirrored.Outlined.Send, R.string.pay, "pay"),
     PROFILE(R.string.profile, Icons.Default.AccountBox, R.string.profile, "profile"),
     CARDS(R.string.cards, Icons.Outlined.CreditCard, R.string.cards, "cards"),
 }
