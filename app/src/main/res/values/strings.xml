@@ -23,5 +23,6 @@
     <string name ="exp_date">Expiration Date</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 
 </resources>

@@ -20,6 +20,7 @@ import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -83,10 +84,10 @@ fun HomeScreen(
                 Text(
                     text = stringResource(id = R.string.balance_amount),
                     modifier = Modifier
-                        //TODO: cambiar el color, tipografia, padding con Theme.kt.
+                        //TODO: cambiar el padding con Theme.kt.
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         .background(colorScheme.onBackground),
-                    fontSize = 24.sp,
+                    fontSize = typography.bodyMedium.fontSize,
                     color = colorScheme.secondary
                 )
                 Row{
@@ -97,7 +98,7 @@ fun HomeScreen(
                                     text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
                                     modifier = Modifier
                                         .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
-                                    fontSize = 36.sp,
+                                    fontSize = typography.bodyLarge.fontSize,
                                     color = colorScheme.secondary
                                 )
                                 ActionButton(
@@ -119,8 +120,7 @@ fun HomeScreen(
                                     text = "\$*****.**",
                                     modifier = Modifier
                                         .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
-                                    //TODO: cambiar usando font.kt
-                                    fontSize = 36.sp,
+                                    fontSize = typography.bodyLarge.fontSize,
                                     color = colorScheme.secondary
 
                                 )
@@ -152,9 +152,7 @@ fun HomeScreen(
                     ActionButton(
                         resId = R.string.deposit_money,
                         onClick = {
-                            //TODO: hacerlo dinamico.
                             viewModel.changeIsWritingAmount()
-//                            viewModel.deposit(100.00)
                         },
                         icon = {
                             Icon(
@@ -171,14 +169,16 @@ fun HomeScreen(
                         AlertDialog(
                             onDismissRequest = { viewModel.changeIsWritingAmount() },
                             title = {
-                                Text(text = stringResource(id = R.string.enter_amount))
+                                Text(
+                                    text = stringResource(id = R.string.enter_amount),
+                                    fontSize = typography.bodyMedium.fontSize,
+                                )
                             },
                             text = {
                                 Column {
                                     TextField(
                                         value = depositAmount,
                                         onValueChange = { depositAmount = it },
-                                        label = { Text(stringResource(id = R.string.enter_amount)) },
                                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                         modifier = Modifier.fillMaxWidth()
                                     )
@@ -193,12 +193,13 @@ fun HomeScreen(
                                             viewModel.changeIsWritingAmount()
                                             depositAmount = ""
                                         } else {
-                                            // Handle invalid input, e.g., show a Snackbar or error message
+                                            // TODO: Handle error case with another method.
                                             Log.d("DepositScreen", "Invalid deposit amount: $depositAmount")
                                         }
                                     }
                                 ) {
-                                    Text(text = stringResource(id = R.string.deposit_money))
+                                    Text(text = stringResource(id = R.string.confirm),
+                                            fontSize = typography.bodySmall.fontSize)
                                 }
                             },
                             dismissButton = {
