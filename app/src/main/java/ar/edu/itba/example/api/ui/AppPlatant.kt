@@ -9,6 +9,7 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -49,19 +50,19 @@ fun AppPlatant(
 
         NavigationSuiteScaffold(
             navigationSuiteItems = {
-                items.forEach {
+                items.forEach { destination ->
                     item(
                         icon = {
                             Icon(
-                                it.icon,
-                                contentDescription = stringResource(it.contentDescription)
+                                painter = painterResource(id = destination.icon),
+                                contentDescription = stringResource(destination.contentDescription)
                             )
                         },
-                        label = { Text(stringResource(it.label)) },
+                        label = { Text(stringResource(destination.label)) },
                         alwaysShowLabel = true,
-                        selected = currentRoute == it.route,
+                        selected = currentRoute == destination.route,
                         onClick = {
-                            navController.navigate(it.route) {
+                            navController.navigate(destination.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
                                 }
@@ -84,4 +85,3 @@ fun AppPlatant(
 fun AdaptiveAppPreview() {
     AppPlatant()
 }
-
