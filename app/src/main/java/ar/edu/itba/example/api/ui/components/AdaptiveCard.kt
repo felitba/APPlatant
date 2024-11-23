@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
@@ -17,12 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ar.edu.itba.example.api.R
+import ar.edu.itba.example.api.data.model.Card
+import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.theme.APIMutableStateTheme
+import kotlin.random.Random
 
 @Composable
 fun AdaptiveCard(
-    @StringRes title: Int,
-    @StringRes description: Int
+    Card : Card,
 ) {
     BoxWithConstraints {
         if (maxWidth < 600.dp) {
@@ -31,18 +34,40 @@ fun AdaptiveCard(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(10.dp)
                 ) {
-                    Icon(imageVector = Icons.Filled.Face, contentDescription = null)
-                    Text(text = stringResource(title))
+                    Column {
+                        Text(text = Card.type.toString())
+                        Text(text = Card.number)
+                        Row {
+                            Text(text = "Exp Date")
+                            Text(text = Card.expirationDate)
+                        }
+                        Row {
+                            Text(text = Card.fullName)
+                            //TODO: cambiar por el logo de Visa, mastercard, o lo que sea.
+                            Icon(imageVector = Icons.Filled.Face, contentDescription = null)
+                        }
+
+                    }
+
                 }
             }
         } else {
             Card {
                 Row(modifier = Modifier.padding(10.dp)) {
                     Column {
-                        Text(stringResource(title))
-                        Text(stringResource(description))
+                        Text(text = Card.type.toString())
+                        Text(text = Card.number)
+                        Row {
+                            Text(text = "Exp Date: ")
+                            Text(text = Card.expirationDate)
+                        }
+                        Row {
+//                            Spacer(modifier = Modifier.weight(0.5f))
+                            Text(text = Card.fullName)
+                            //TODO: cambiar por el logo de Visa, mastercard, o lo que sea.
+                            Icon(imageVector = Icons.Filled.Face, contentDescription = null)
+                        }
                     }
-                    Icon(imageVector = Icons.Filled.Face, contentDescription = null)
                 }
             }
         }
@@ -53,7 +78,12 @@ fun AdaptiveCard(
 @Composable
 fun AdaptiveCardCardSmallPreview() {
     APIMutableStateTheme {
-        AdaptiveCard(R.string.card_title, R.string.card_description)
+        val random = Random.nextInt(0, 9999)
+        AdaptiveCard(Card(number = "499003140861${random.toString().padStart(4, '0')}",
+            fullName = "Christeen Mischke",
+            expirationDate = "05/28",
+            cvv = "215",
+            type = CardType.CREDIT))
     }
 }
 
@@ -61,6 +91,11 @@ fun AdaptiveCardCardSmallPreview() {
 @Composable
 fun AdaptiveCardCardPreview() {
     APIMutableStateTheme {
-        AdaptiveCard(R.string.card_title, R.string.card_description)
+        val random = Random.nextInt(0, 9999)
+        AdaptiveCard(Card(number = "499003140861${random.toString().padStart(4, '0')}",
+            fullName = "Christeen Mischke",
+            expirationDate = "05/28",
+            cvv = "215",
+            type = CardType.CREDIT))
     }
 }

@@ -11,8 +11,8 @@
     <string name="favorite">Favorite</string>
     <string name="shopping">Shopping</string>
     <string name="profile">Profile</string>
-    <string name="card_title">Card Title</string>
-    <string name="card_description">Card Description</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_owner">Card Owner</string>
     <string name="portrait">Portrait</string>
     <string name="landscape">Landscape</string>
     <string name="balance_amount">Balance Available</string>

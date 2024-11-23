@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -57,12 +59,12 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
 
             val mediumPadding = dimensionResource(R.dimen.medium_padding)
 
-            LazyHorizontalGrid(
-                rows = GridCells.Fixed(2),
+            LazyVerticalGrid(
                 contentPadding = PaddingValues(horizontal = mediumPadding),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.height(120.dp)
+                modifier = Modifier.width(120.dp),
+                columns = GridCells.Fixed(2),
             )
                 {
                     when {
@@ -79,8 +81,7 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
                         else -> {
                             items(items = uiState.cards!!) { item ->
                                 //TODO: cambiar esta parte por la componente de la tarjeta.
-
-                                Text(text = item.number, Modifier.height(56.dp))
+                                AdaptiveCard(item)
                             }
                         }
                     }

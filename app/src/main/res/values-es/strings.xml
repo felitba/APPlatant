@@ -12,8 +12,8 @@
     <string name="favorite">Favoritos</string>
     <string name="shopping">Shopping</string>
     <string name="profile">Perfil</string>
-    <string name="card_title">Titulo de tarjeta</string>
-    <string name="card_description">Descripción de tarjeta</string>
+    <string name="card_number">Numero de tarjeta</string>
+    <string name="card_owner">Titular de la tarjeta</string>
     <string name="portrait">Retrato</string>
     <string name="landscape">Paisaje</string>
     <string name="balance_amount">Saldo Disponible</string>
