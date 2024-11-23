@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
@@ -8,24 +9,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.outlined.ArrowDropDown
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
@@ -41,7 +48,7 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.onBackground)
+            .background(colorScheme.onBackground)
     ) {
         Column(
             modifier = Modifier.align(alignment = Alignment.End)
@@ -80,10 +87,9 @@ fun HomeScreen(
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         .background(colorScheme.onBackground),
                     fontSize = 24.sp,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = colorScheme.secondary
                 )
-                Row(
-                ) {
+                Row{
                         if (uiState.walletDetail != null) {
                             //TODO: deberia estar en una componente.
                             if (uiState.showBalance) {
@@ -92,17 +98,16 @@ fun HomeScreen(
                                     modifier = Modifier
                                         .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
                                     fontSize = 36.sp,
-                                    color = MaterialTheme.colorScheme.secondary
+                                    color = colorScheme.secondary
                                 )
                                 ActionButton(
                                     resId = R.string.change_balance,
                                     onClick = {
                                         viewModel.changeBalanceView()
                                     },
-                                    // TODO: Cambiar el icono por un ojo. No lo encuentro.
                                     icon = {
                                         Icon(
-                                            imageVector = Icons.Outlined.KeyboardArrowUp,
+                                            imageVector = Icons.Outlined.Visibility,
                                             contentDescription = stringResource(id = R.string.balance_amount),
                                             modifier = Modifier
                                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
@@ -114,6 +119,7 @@ fun HomeScreen(
                                     text = "\$*****.**",
                                     modifier = Modifier
                                         .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
+                                    //TODO: cambiar usando font.kt
                                     fontSize = 36.sp,
                                     color = colorScheme.secondary
 
@@ -125,7 +131,7 @@ fun HomeScreen(
                                     },
                                     icon = {
                                         Icon(
-                                            imageVector = Icons.Outlined.ArrowDropDown,
+                                            imageVector = Icons.Outlined.VisibilityOff,
                                             contentDescription = stringResource(id = R.string.balance_amount),
                                             modifier = Modifier
                                                 .padding(
@@ -142,11 +148,13 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .background(color = colorScheme.background)
                 ) {
+                    var depositAmount by remember { mutableStateOf("") }
                     ActionButton(
                         resId = R.string.deposit_money,
                         onClick = {
                             //TODO: hacerlo dinamico.
-                            viewModel.deposit(100.00)
+                            viewModel.changeIsWritingAmount()
+//                            viewModel.deposit(100.00)
                         },
                         icon = {
                             Icon(
@@ -159,6 +167,48 @@ fun HomeScreen(
                             )
                         }
                     )
+                    if (uiState.isWriting) {
+                        AlertDialog(
+                            onDismissRequest = { viewModel.changeIsWritingAmount() },
+                            title = {
+                                Text(text = stringResource(id = R.string.enter_amount))
+                            },
+                            text = {
+                                Column {
+                                    TextField(
+                                        value = depositAmount,
+                                        onValueChange = { depositAmount = it },
+                                        label = { Text(stringResource(id = R.string.enter_amount)) },
+                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
+                            },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        val amount = depositAmount.toDoubleOrNull()
+                                        if (amount != null && amount > 0) {
+                                            viewModel.deposit(amount)
+                                            viewModel.changeIsWritingAmount()
+                                            depositAmount = ""
+                                        } else {
+                                            // Handle invalid input, e.g., show a Snackbar or error message
+                                            Log.d("DepositScreen", "Invalid deposit amount: $depositAmount")
+                                        }
+                                    }
+                                ) {
+                                    Text(text = stringResource(id = R.string.deposit_money))
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(
+                                    onClick = { viewModel.changeIsWritingAmount() }
+                                ) {
+                                    Text(text = stringResource(id = R.string.cancel))
+                                }
+                            })
+                    }
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {

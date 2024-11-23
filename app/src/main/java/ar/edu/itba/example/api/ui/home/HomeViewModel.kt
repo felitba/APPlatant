@@ -87,6 +87,13 @@ class HomeViewModel(
         { state, _ -> state }
     )
 
+    fun changeIsWritingAmount() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(isWriting = !currentState.isWriting) }
+        },
+        { state, _ -> state }
+    )
+
     /* Cards Section */
 
 //    fun getCards() = runOnViewModelScope(

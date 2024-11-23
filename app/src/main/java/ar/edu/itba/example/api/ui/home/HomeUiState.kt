@@ -13,7 +13,8 @@ data class HomeUiState(
     val error: Error? = null,
     val showBalance : Boolean = true,
     val cards: List<Card>? = emptyList(),
-    val currentCard: Card? = null
+    val currentCard: Card? = null,
+    val isWriting: Boolean = false
 )
 
 val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated

@@ -22,6 +22,8 @@
     <string name="pay">Pagar</string>
     <string name="charge">Cobrar</string>
     <string name ="exp_date">Fecha Exp.</string>
+    <string name="enter_amount">Ingresar monto</string>
+    <string name="cancel">Cancelar</string>
 
 
 </resources>
