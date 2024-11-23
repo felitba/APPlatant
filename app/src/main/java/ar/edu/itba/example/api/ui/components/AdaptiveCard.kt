@@ -29,6 +29,8 @@ fun AdaptiveCard(
     card : Card,
 ) {
     BoxWithConstraints {
+        //TODO: por ahora no veo la necesidad de adaptarlo a pantalla...
+        //deberia mostrar lo mismo. Caapz q box constraints es innecesario. 
         if (maxWidth < 600.dp) {
             Card {
                 Column(
@@ -120,10 +122,34 @@ fun AdaptiveCardCardSmallPreview() {
 fun AdaptiveCardCardPreview() {
     APIMutableStateTheme {
         val random = Random.nextInt(0, 9999)
-        AdaptiveCard(Card(number = "499003140861${random.toString().padStart(4, '0')}",
-            fullName = "Christeen Mischke",
-            expirationDate = "05/28",
-            cvv = "215",
-            type = CardType.CREDIT))
+        Row {
+            AdaptiveCard(
+                Card(
+                    number = "499003140861${random.toString().padStart(4, '0')}",
+                    fullName = "Christeen Mischke",
+                    expirationDate = "05/28",
+                    cvv = "215",
+                    type = CardType.CREDIT
+                )
+            )
+//            AdaptiveCard(
+//                Card(
+//                    number = "499003140861${random.toString().padStart(4, '0')}",
+//                    fullName = "Christeen Mischke",
+//                    expirationDate = "05/28",
+//                    cvv = "215",
+//                    type = CardType.CREDIT
+//                )
+//            )
+//            AdaptiveCard(
+//                Card(
+//                    number = "499003140861${random.toString().padStart(4, '0')}",
+//                    fullName = "Christeen Mischke",
+//                    expirationDate = "05/28",
+//                    cvv = "215",
+//                    type = CardType.CREDIT
+//                )
+//            )
+        }
     }
 }

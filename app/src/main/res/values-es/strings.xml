@@ -21,5 +21,7 @@
     <string name="deposit_money">Depositar Dinero</string>
     <string name="pay">Pagar</string>
     <string name="charge">Cobrar</string>
+    <string name ="exp_date">Fecha Exp.</string>
+
 
 </resources>

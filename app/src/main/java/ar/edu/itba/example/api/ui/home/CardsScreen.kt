@@ -27,6 +27,8 @@ import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.components.ActionButton
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -42,7 +44,11 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Column{
+    Column(
+        modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())
+    ){
         ActionButton(
             resId = R.string.add_card,
             enabled = uiState.canAddCard,
@@ -104,7 +110,6 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
 
                         else -> {
                             items(items = uiState.cards!!) { item ->
-                                //TODO: cambiar esta parte por la componente de la tarjeta.
                                 AdaptiveCard(item)
                             }
                         }

@@ -1,13 +1,11 @@
 package ar.edu.itba.example.api.ui.home
 
-import android.widget.EditText
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -21,16 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
-import ar.edu.itba.example.api.data.model.Card
-import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.components.ActionButton
-import kotlin.random.Random
 
 @Composable
 fun HomeScreen(
@@ -43,88 +39,97 @@ fun HomeScreen(
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
-        if (!uiState.isAuthenticated) {
-            ActionButton(
-                resId = R.string.login,
-                onClick = {
-                    viewModel.login("johndoe@email.com", "1234567890")
-                })
-        } else {
-            ActionButton(
-                resId = R.string.logout,
-                onClick = {
-                    viewModel.logout()
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Default.AccountCircle,
-                        contentDescription = stringResource(id = R.string.logout),
-                    )
-                }
-            )
+        //TODO: hacer que el icono aparezca a la derecha.
+        Column(
+            modifier = Modifier.align(alignment = Alignment.End)
+        ) {
+            if (!uiState.isAuthenticated) {
+                ActionButton(
+                    resId = R.string.login,
+                    onClick = {
+                        viewModel.login("johndoe@email.com", "1234567890")
+                    })
+            } else {
+                ActionButton(
+                    resId = R.string.logout,
+                    onClick = {
+                        viewModel.logout()
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.AccountCircle,
+                            contentDescription = stringResource(id = R.string.logout),
+                        )
+                    }
+                )
+            }
+        }
 
 
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                //TODO: por alguna razon, cuando uso row se superpone todo y no muestra nada.
                 Text(
                     text = stringResource(id = R.string.balance_amount),
                     modifier = Modifier
-                        .fillMaxWidth()
+//                                .fillMaxWidth()
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                     fontSize = 18.sp
                 )
-                if (uiState.walletDetail != null) {
-                    //TODO: deberia estar en una componente.
-                    if (uiState.showBalance) {
-                        Text(
-                            text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                            fontSize = 18.sp
-                        )
-                        ActionButton(
-                            resId = R.string.change_balance,
-                            onClick = {
-                                viewModel.changeBalanceView()
-                            },
-                            // TODO: Cambiar el icono por un ojo. No lo encuentro.
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Outlined.KeyboardArrowUp,
-                                    contentDescription = stringResource(id = R.string.balance_amount),
+                Row(
+//                    modifier = Modifier.fillMaxWidth()
+                ) {
+                        if (uiState.walletDetail != null) {
+                            //TODO: deberia estar en una componente.
+                            if (uiState.showBalance) {
+                                Text(
+                                    text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
                                     modifier = Modifier
+//                                        .fillMaxWidth()
                                         .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                    fontSize = 18.sp
                                 )
-                            }
-                        )
-                    } else {
-                        Text(
-                            text = "\$*****.**",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-
-                            )
-                        ActionButton(
-                            resId = R.string.change_balance,
-                            onClick = {
-                                viewModel.changeBalanceView()
-                            },
-                            icon = {
-                                Icon(
-                                    imageVector = Icons.Outlined.ArrowDropDown,
-                                    contentDescription = stringResource(id = R.string.balance_amount),
+                                ActionButton(
+                                    resId = R.string.change_balance,
+                                    onClick = {
+                                        viewModel.changeBalanceView()
+                                    },
+                                    // TODO: Cambiar el icono por un ojo. No lo encuentro.
+                                    icon = {
+                                        Icon(
+                                            imageVector = Icons.Outlined.KeyboardArrowUp,
+                                            contentDescription = stringResource(id = R.string.balance_amount),
+                                            modifier = Modifier
+                                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                        )
+                                    }
+                                )
+                            } else {
+                                Text(
+                                    text = "\$*****.**",
                                     modifier = Modifier
-                                        .padding(
-                                            top = 16.dp, start = 16.dp, end = 16.dp
-                                        ),
+//                                        .fillMaxWidth()
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+
+                                    )
+                                ActionButton(
+                                    resId = R.string.change_balance,
+                                    onClick = {
+                                        viewModel.changeBalanceView()
+                                    },
+                                    icon = {
+                                        Icon(
+                                            imageVector = Icons.Outlined.ArrowDropDown,
+                                            contentDescription = stringResource(id = R.string.balance_amount),
+                                            modifier = Modifier
+                                                .padding(
+                                                    top = 16.dp, start = 16.dp, end = 16.dp
+                                                ),
+                                        )
+                                    }
                                 )
-                            }
-                        )
                     }
+                }
                 }
                 Row(Modifier.fillMaxWidth()) {
                     ActionButton(
@@ -190,7 +195,6 @@ fun HomeScreen(
             }
         }
     }
-}
 
 //import android.content.res.Configuration
 //import androidx.compose.foundation.layout.Arrangement
