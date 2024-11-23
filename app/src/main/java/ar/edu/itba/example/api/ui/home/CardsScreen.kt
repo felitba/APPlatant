@@ -47,7 +47,7 @@ fun CardsScreen(viewModel: HomeViewModel = viewModel(factory = HomeViewModel.pro
     Column(
         modifier = Modifier
         .fillMaxWidth()
-        .verticalScroll(rememberScrollState())
+//        .verticalScroll(rememberScrollState())
     ){
         ActionButton(
             resId = R.string.add_card,

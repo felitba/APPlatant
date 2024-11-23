@@ -39,7 +39,6 @@ fun HomeScreen(
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
-        //TODO: hacer que el icono aparezca a la derecha.
         Column(
             modifier = Modifier.align(alignment = Alignment.End)
         ) {
