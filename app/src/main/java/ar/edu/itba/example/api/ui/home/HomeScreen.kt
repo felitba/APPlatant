@@ -59,14 +59,13 @@ fun HomeScreen(
         Column(
             modifier = Modifier.align(alignment = Alignment.End)
         ) {
-            //TODO: cuando loginScreen este hecha sacar esto.
-            if (!uiState.isAuthenticated) {
-                ActionButton(
-                    resId = R.string.login,
-                    onClick = {
-                        viewModel.login("johndoe@email.com", "1234567890")
-                    })
-            }
+//            if (!uiState.isAuthenticated) {
+//                ActionButton(
+//                    resId = R.string.login,
+//                    onClick = {
+//                        viewModel.login("johndoe@email.com", "1234567890")
+//                    })
+//            }
             if (uiState.isAuthenticated) {
                 ActionButton(
                     resId = R.string.logout,
@@ -108,7 +107,6 @@ fun HomeScreen(
                                 Button(onClick = {
                                     viewModel.logOutMessageDisplays()
                                     viewModel.logout()
-                                    //TODO: navegar a la pag. de login.
                                 }) {
                                     Text(stringResource(id = R.string.confirm))
                                 }

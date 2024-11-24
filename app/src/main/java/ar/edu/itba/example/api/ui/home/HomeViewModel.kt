@@ -78,7 +78,8 @@ class HomeViewModel(
         { state, response -> state.copy(currentUser = response) }
     )
 
-/* Deposit Section */
+    /* Deposit Section */
+
     fun deposit(amount: Double) = runOnViewModelScope(
         {
             walletRepository.deposit(amount)
@@ -160,6 +161,13 @@ class HomeViewModel(
             walletRepository.walletCardsStream
         ) { state, response -> state.copy(cards = response) }
     }
+
+    fun changeIsUpdatingCard() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(isUpdatingCard = !currentState.isUpdatingCard) }
+        },
+        { state, _ -> state }
+    )
 
     /*  Payment   */
 

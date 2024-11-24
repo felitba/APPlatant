@@ -49,6 +49,9 @@
     <string name="destinatary">Destinatary:</string>
     <string name="profile_picture">User Photo</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="loading">Loading…</string>
+    <string name = "no_cards_available">No cards available</string>
+    <string name = "total_cards"> Total Cards:</string>
 
 
 

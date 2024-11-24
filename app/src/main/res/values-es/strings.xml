@@ -50,5 +50,9 @@
     <string name="destinatary">Destinatario:</string>
     <string name="profile_picture">Foto de perfil</string>
     <string name="edit_profile">Editar Perfil</string>
+    <string name="loading">Cargando…</string>
+    <string name = "no_cards_available">No hay tarjetas disponibles.</string>
+    <string name="total_cards"> Total de Tarjetas:</string>
+
 
 </resources>
