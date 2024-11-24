@@ -1,6 +1,8 @@
 package ar.edu.itba.example.api.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -59,7 +61,8 @@ fun PayScreen(viewModel: HomeViewModel) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     var cvu by remember { mutableStateOf("") }
     var valueToPay by remember { mutableStateOf("") }
-
+    var selectedCard by remember { mutableStateOf<Card?>(null) }
+    var balance by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -118,12 +121,18 @@ fun PayScreen(viewModel: HomeViewModel) {
                     ElevatedCard(
                         modifier = Modifier
                             .padding(8.dp)
-                            .size(width = 300.dp, height = 150.dp),
+                            .size(width = 300.dp, height = 150.dp)
+                            .border(
+                                width = if (balance) 2.dp else 0.dp,
+                                color = if (balance) Color.Blue else Color.Transparent,
+                                shape = RoundedCornerShape(8.dp)),
                         colors = CardDefaults.elevatedCardColors(
                             containerColor = Color(0xFF2C2C2C)
                         ),
                     ) {
-                        Box {
+                        Box(
+                            modifier = Modifier.clickable { balance = true ; selectedCard = null },
+                        ) {
                             Image(
                                 painter = painterResource(id = R.drawable.logo2),
                                 contentDescription = null,
@@ -134,7 +143,11 @@ fun PayScreen(viewModel: HomeViewModel) {
                         }
                     }
                     uiState.cards?.forEach { card ->
-                        Cards(card)
+                        Cards(
+                            tarjeta = card,
+                            selected = card == selectedCard,
+                            onClick = { selectedCard = card; balance = false }
+                        )
                     }
                 }
 
@@ -235,9 +248,8 @@ fun Balance(balance: String) {
     }
 }
 
-
 @Composable
-fun Cards(tarjeta: Card) {
+fun Cards(tarjeta: Card, selected: Boolean, onClick: () -> Unit) {
     val (color, company, iconResId) = when (tarjeta.number[0]) {
         '3' -> Triple(Color(0xFFE1CC83), "American Express", R.drawable.credit_card)//Ver pq se rompe si pongo amex
         '4' -> Triple(Color(0xFF83E1B4), "Visa", R.drawable.visa)
@@ -248,7 +260,13 @@ fun Cards(tarjeta: Card) {
     ElevatedCard(
         modifier = Modifier
             .padding(8.dp)
-            .size(width = 300.dp, height = 150.dp),
+            .size(width = 300.dp, height = 150.dp)
+            .border(
+                width = if (selected) 2.dp else 0.dp,
+                color = if (selected) Color.Blue else Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         ),
