@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,8 @@ import kotlin.random.Random
 @Composable
 fun AdaptiveCard(
     card : Card,
+    onClick: (Card) -> Unit
+
 ) {
     BoxWithConstraints {
         //TODO:  adaptarlo a tablet
@@ -33,6 +36,8 @@ fun AdaptiveCard(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(10.dp)
+                        .clickable(onClick = { onClick(card) })
+
                 ) {
                     Column(
                         modifier = Modifier.padding(top = 5.dp)
@@ -120,7 +125,8 @@ fun AdaptiveCardCardSmallPreview() {
             fullName = "Christeen Mischke",
             expirationDate = "05/28",
             cvv = "215",
-            type = CardType.CREDIT))
+            type = CardType.CREDIT),
+            onClick = {})
     }
 }
 
@@ -137,7 +143,8 @@ fun AdaptiveCardCardPreview() {
                     expirationDate = "05/28",
                     cvv = "215",
                     type = CardType.CREDIT
-                )
+                ),
+                onClick = {}
             )
 //            AdaptiveCard(
 //                Card(

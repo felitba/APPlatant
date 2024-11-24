@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -71,6 +70,7 @@ fun CardsScreen(
 
                 ) {
 
+                    //TODO: aca se podria usar HomeUiState.canGetAllCards
                     if (uiState.cards != null) {
 
                         val mediumPadding = dimensionResource(R.dimen.medium_padding)
@@ -92,6 +92,7 @@ fun CardsScreen(
                             )
                         {
                             when {
+                                //Ignorar este warning. Si que puede ser NULL, cuando esta fetcheando datos.
                                 uiState.cards ==null -> {
                                     item {
                                         //TODO: loading Data screen appears weird. Fix it.
@@ -106,7 +107,7 @@ fun CardsScreen(
 
                                 else -> {
                                     items(items = uiState.cards!!) { item ->
-                                        AdaptiveCard(item)
+                                        AdaptiveCard(item, onClick = {viewModel.setCurrentCard(it)})
                                     }
                                 }
                             }

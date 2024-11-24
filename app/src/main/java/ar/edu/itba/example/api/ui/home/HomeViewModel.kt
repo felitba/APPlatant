@@ -125,6 +125,13 @@ class HomeViewModel(
         }
     )
 
+    fun setCurrentCard(card: Card) = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(currentCard = card) }
+        },
+        { state, _ -> state }
+    )
+
     private fun observeWalletDetailStream() {
         walletDetailStreamJob = collectOnViewModelScope(
             walletRepository.walletDetailStream
