@@ -121,9 +121,9 @@ fun PayScreen(viewModel: HomeViewModel) {
                     ElevatedCard(
                         modifier = Modifier
                             .padding(8.dp)
-                            .size(width = 300.dp, height = 150.dp)//            .padding(8.dp)
+                            .size(width = 300.dp, height = 150.dp)
                             .border(
-                                width = if (balance) 4.dp else 0.dp,
+                                width = if (balance) 2.dp else 0.dp,
                                 color = if (balance) Color.Blue else Color.Transparent,
                                 shape = RoundedCornerShape(8.dp)),
                         colors = CardDefaults.elevatedCardColors(
@@ -262,7 +262,7 @@ fun Cards(tarjeta: Card, selected: Boolean, onClick: () -> Unit) {
             .padding(8.dp)
             .size(width = 300.dp, height = 150.dp)
             .border(
-                width = if (selected) 4.dp else 0.dp,
+                width = if (selected) 2.dp else 0.dp,
                 color = if (selected) Color.Blue else Color.Transparent,
                 shape = RoundedCornerShape(8.dp)
             )
