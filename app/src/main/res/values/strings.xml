@@ -29,4 +29,6 @@
     <string name="quantity">Amount:</string>
     <string name="cvu">cvu or alias</string>
     <string name="qr">QR code</string>
+    <string name="icono">Card icon</string>
+
 </resources>
