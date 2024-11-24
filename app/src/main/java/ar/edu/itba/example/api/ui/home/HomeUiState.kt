@@ -18,7 +18,7 @@ data class HomeUiState(
     val isWriting: Boolean = false,
 
     val isPaymentInProgress: Boolean = false,
-    val payments: List<Payment>? = emptyList()
+    val payments: List<Payment>? = emptyList(),
     val errorMessage: Boolean = false,
     val aboutToLogOut: Boolean = false,
     val eliminateCardMessage: Boolean = false

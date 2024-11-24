@@ -4,7 +4,6 @@ import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.Payment
 import ar.edu.itba.example.api.data.model.PaymentType
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.serialDescriptor
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -17,9 +16,11 @@ class NetworkPayment(
     var pending: Boolean,
     var createdAt: String?,
     var updatedAt: String?,
-    var card: Card? = null,
+    var card: NetworkCard? = null,
     var description: String,
-    var receiverEmail: String? = null
+    var receiverEmail: String? = null,
+    var balanceBefore: Double? = null,
+    var balanceAfter: Double? = null
 
     ) {
     fun asModel(): Payment {
@@ -36,9 +37,11 @@ class NetworkPayment(
             createdAt = createdAt?.let { dateFormat.parse(it) },
             updatedAt = updatedAt?.let { dateFormat.parse(it) },
             receiverEmail = receiverEmail,
-            card = card,
+            card = card?.asModel(),
             description = description,
-            linkUuid = linkUuid
+            linkUuid = linkUuid,
+            balanceBefore =  balanceBefore,
+            balanceAfter = balanceAfter
         )
     }
 }

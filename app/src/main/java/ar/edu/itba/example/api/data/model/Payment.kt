@@ -4,6 +4,7 @@ import ar.edu.itba.example.api.data.network.model.NetworkPayment
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.Double
 
 class Payment(
     var id: Int? = null,
@@ -15,15 +16,10 @@ class Payment(
     var updatedAt: Date? = null,
     var card: Card? = null,
     var linkUuid: String? = null,
-    var receiverEmail: String? = null
+    var receiverEmail: String? = null,
+    var balanceBefore: Double? = null,
+    var balanceAfter: Double? = null
 ) {
-
-    fun validate()  {
-
-        if(type == PaymentType.CARD && card == null)  {
-            throw IllegalArgumentException("missing card id while generating payment")
-        }
-    }
 
     fun asNetworkModel(): NetworkPayment {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault(Locale.Category.FORMAT))
@@ -40,8 +36,10 @@ class Payment(
             createdAt = createdAt?.let { dateFormat.format(it) },
             updatedAt = updatedAt?.let { dateFormat.format(it) },
             receiverEmail = receiverEmail,
-            card = card,
+            card = card?.asNetworkModel(),
             linkUuid = linkUuid,
+            balanceBefore = balanceBefore,
+            balanceAfter = balanceAfter
         )
     }
 }
