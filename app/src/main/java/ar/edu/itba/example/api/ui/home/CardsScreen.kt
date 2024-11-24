@@ -124,16 +124,16 @@ fun CardsScreen(
                             }
                         }
                         item {
-
+                            Text(
+                                text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                fontSize = typography.bodyMedium.fontSize
+                            )
                         }
                     }
-                    Text(
-                        text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                        fontSize = typography.bodyMedium.fontSize
-                    )
+
                 } else {
                     Text(text= stringResource(id = R.string.loading), Modifier.padding(16.dp))
                 }
