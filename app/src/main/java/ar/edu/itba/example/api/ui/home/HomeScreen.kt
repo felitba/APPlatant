@@ -83,6 +83,7 @@ fun HomeScreen(
             }
 
             if (uiState.aboutToLogOut) {
+                viewModel.getCurrentUser()
                 Dialog(onDismissRequest = { viewModel.logOutMessageDisplays() }) {
                     Surface(
                         shape = shapes.medium,
@@ -93,8 +94,8 @@ fun HomeScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                //TODO: add current user 
-                                text = stringResource(id = R.string.confirm_logout),
+                                //TODO: add current user name.
+                                text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
                                 style = typography.bodyMedium,
 //                                color = colorScheme.error,
                                 modifier = Modifier.padding(16.dp)

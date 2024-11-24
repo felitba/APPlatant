@@ -70,10 +70,10 @@ class HomeViewModel(
         { state, _ -> state }
     )
 
-//    fun getCurrentUser() = runOnViewModelScope(
-//        { userRepository.getCurrentUser(uiState.currentUser == null) },
-//        { state, response -> state.copy(currentUser = response) }
-//    )
+    fun getCurrentUser() = runOnViewModelScope(
+        { userRepository.getCurrentUser(_uiState.value.currentUser == null) },
+        { state, response -> state.copy(currentUser = response) }
+    )
 
 /* Deposit Section */
     fun deposit(amount: Double) = runOnViewModelScope(
