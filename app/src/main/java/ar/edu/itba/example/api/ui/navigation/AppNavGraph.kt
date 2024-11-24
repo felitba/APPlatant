@@ -32,7 +32,7 @@ fun AppNavGraph(
             ProfileScreen()
         }
         composable(route = AppDestinations.PAY.route) {
-            PayScreen()
+            PayScreen(viewModel)
         }
     }
 }
