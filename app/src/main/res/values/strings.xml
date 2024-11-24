@@ -29,6 +29,7 @@
     <string name="quantity">Amount:</string>
     <string name="cvu">cvu or alias</string>
     <string name="qr">QR code</string>
+    <string name="error_invalid_amount">Invalid amount. Use positive numbers.</string>
     <string name="icono">Card icon</string>
 
 </resources>

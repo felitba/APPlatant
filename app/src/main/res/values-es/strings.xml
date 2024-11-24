@@ -30,5 +30,7 @@
     <string name="quantity">Monto:</string>
     <string name="cvu">cvu o alias</string>
     <string name="qr">Codigo QR</string>
+    <string name="error_invalid_amount">Monto invalido. Use numeros positivos.</string>
+
     <string name="icono">Icono de tarjeta</string>
 </resources>

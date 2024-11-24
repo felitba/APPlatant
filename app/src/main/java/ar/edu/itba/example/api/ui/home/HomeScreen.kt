@@ -2,6 +2,7 @@ package ar.edu.itba.example.api.ui.home
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,9 +19,12 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -36,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.ui.components.ActionButton
 
@@ -92,7 +97,6 @@ fun HomeScreen(
                 )
                 Row{
                         if (uiState.walletDetail != null) {
-                            //TODO: deberia estar en una componente.
                             if (uiState.showBalance) {
                                 Text(
                                     text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
@@ -111,7 +115,7 @@ fun HomeScreen(
                                             imageVector = Icons.Outlined.Visibility,
                                             contentDescription = stringResource(id = R.string.balance_amount),
                                             modifier = Modifier
-                                                .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
+                                                .padding( end = 16.dp,bottom = 16.dp),
                                         )
                                     }
                                 )
@@ -135,7 +139,7 @@ fun HomeScreen(
                                             contentDescription = stringResource(id = R.string.balance_amount),
                                             modifier = Modifier
                                                 .padding(
-                                                    top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp
+                                                    end = 16.dp,bottom = 16.dp
                                                 ),
                                         )
                                     }
@@ -194,7 +198,7 @@ fun HomeScreen(
                                             viewModel.changeIsWritingAmount()
                                             depositAmount = ""
                                         } else {
-                                            // TODO: Handle error case with another method.
+                                            viewModel.changeErrorMessage()
                                             Log.d("DepositScreen", "Invalid deposit amount: $depositAmount")
                                         }
                                     }
@@ -211,6 +215,31 @@ fun HomeScreen(
                                 }
                             })
                     }
+
+                    if (uiState.errorMessage) {
+                        Dialog(onDismissRequest = { viewModel.changeErrorMessage() }) {
+                            Surface(
+                                shape = shapes.medium,
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = stringResource(id = R.string.error_invalid_amount),
+                                        style = typography.bodyMedium,
+                                        color = colorScheme.error,
+                                        modifier = Modifier.padding( 16.dp)
+                                    )
+                                    Button(onClick = { viewModel.changeErrorMessage() }) {
+                                        Text(text = "OK")
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {
