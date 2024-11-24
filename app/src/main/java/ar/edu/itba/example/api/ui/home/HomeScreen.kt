@@ -46,7 +46,8 @@ import ar.edu.itba.example.api.ui.components.ActionButton
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onPayNavigate: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -67,18 +68,26 @@ fun HomeScreen(
 //                    })
 //            }
             if (uiState.isAuthenticated) {
-                ActionButton(
-                    resId = R.string.logout,
-                    onClick = {
-                        viewModel.logOutMessageDisplays()
-                    },
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Default.AccountCircle,
-                            contentDescription = stringResource(id = R.string.logout),
-                        )
-                    }
-                )
+                viewModel.getCurrentUser()
+
+                Column( modifier = Modifier.align(alignment = Alignment.End)
+                ) {
+                    ActionButton(
+                        resId = R.string.logout,
+                        onClick = {
+                            viewModel.logOutMessageDisplays()
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.AccountCircle,
+                                contentDescription = stringResource(id = R.string.logout),
+                            )
+                        }
+                    )
+                    Text( text = "Hi ${uiState.currentUser?.firstName} ${uiState.currentUser?.lastName}",
+                        color = colorScheme.secondary,
+                        fontSize = typography.bodySmall.fontSize)
+                }
             }
 
             if (uiState.aboutToLogOut) {
@@ -292,7 +301,8 @@ fun HomeScreen(
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {
-                            //TODO: como deberia nevegar desde Home? HomeviewModel no tiene los permisos
+                            //TODO:
+                            onPayNavigate()
                         },
                         icon = {
                             Icon(

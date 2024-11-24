@@ -32,7 +32,14 @@ fun AppNavGraph(
         }
     ) {
         composable(route = AppDestinations.HOME.route) {
-            HomeScreen(viewModel = viewModel)
+            HomeScreen(viewModel = viewModel,
+                onPayNavigate = {
+                    navController.navigate(AppDestinations.PAY.route) {
+                        popUpTo(AppDestinations.HOME.route) {
+                            inclusive = false
+                        }
+                    }
+            })
         }
         composable(route = AppDestinations.CARDS.route) {
             CardsScreen(viewModel = viewModel)
