@@ -33,6 +33,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
@@ -45,13 +46,14 @@ fun CardsScreen(
     viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val lazyGridState = rememberLazyGridState()
 
     Box(
         modifier = Modifier
 //                    .fillMaxSize()
                      .padding(16.dp)
                     .background(color = colorScheme.background)
-
+        ,
     ) {
             //Title Section.
             Column(
@@ -92,7 +94,7 @@ fun CardsScreen(
                             modifier = Modifier,//fillMaxWidth(),
                             columns = GridCells.Fixed(1),
                             userScrollEnabled = true,
-                            state = rememberLazyGridState(),
+                            state = lazyGridState,
                             )
                         {
                             when {
