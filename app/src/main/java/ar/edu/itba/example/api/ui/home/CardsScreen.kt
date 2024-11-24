@@ -23,6 +23,7 @@ import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.components.ActionButton
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -34,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
 
+//TODO: show more/show less feature + onClick make the card be the "current card"
 @Composable
 fun CardsScreen(
     viewModel: HomeViewModel
@@ -42,7 +44,7 @@ fun CardsScreen(
 
     Box(
         modifier = Modifier
-                    .fillMaxSize()
+//                    .fillMaxSize()
                      .padding(16.dp)
                     .background(color = colorScheme.background)
 
@@ -50,9 +52,8 @@ fun CardsScreen(
             //Title Section.
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .background(color = colorScheme.onBackground)
-                    .padding(top = 18.dp),
+                    .padding(top = 32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -64,7 +65,6 @@ fun CardsScreen(
                 )
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .background(color = colorScheme.background)
                         .padding(top = 24.dp, bottom = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -78,8 +78,8 @@ fun CardsScreen(
                         LazyVerticalGrid(
                             contentPadding = PaddingValues(
                                 horizontal = mediumPadding,
-                                vertical = mediumPadding
-                            ),
+                                vertical = mediumPadding,
+                                ),
                             verticalArrangement = Arrangement.spacedBy(
                                 16.dp,
                                 Alignment.CenterVertically
@@ -87,10 +87,17 @@ fun CardsScreen(
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier,//fillMaxWidth(),
                             columns = GridCells.Fixed(1),
-                            userScrollEnabled = true
-                        )
+                            userScrollEnabled = true,
+                            state = rememberLazyGridState(),
+                            )
                         {
                             when {
+                                uiState.cards ==null -> {
+                                    item {
+                                        //TODO: loading Data screen appears weird. Fix it.
+                                        Text("Loading data...", Modifier.padding(16.dp))
+                                    }
+                                }
                                 uiState.cards!!.isEmpty() -> {
                                     item {
                                         Text("No cards available", Modifier.padding(16.dp))
@@ -134,6 +141,7 @@ fun CardsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
+            //TODO: remove this add button, is only for testing purposes.
             ActionButton(
                 resId = R.string.add_card,
                 enabled = uiState.canAddCard,
