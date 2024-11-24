@@ -12,6 +12,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,11 +36,12 @@ fun AppLogo() {
                 Image(
                     painter = painterResource(R.drawable.platant),
                     contentDescription = stringResource(R.string.app_name),
-                    Modifier.size(dimensionResource(R.dimen.image_medium))
+                    Modifier.size(dimensionResource(R.dimen.image_medium)),
                 )
                 Text(
                     text = stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold)
+                    style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
+                    color = Color.White,
                 )
             } else {
                 Image(

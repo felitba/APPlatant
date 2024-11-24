@@ -33,6 +33,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -70,6 +71,7 @@ fun PayScreen(viewModel: HomeViewModel) {
     var descripcion by remember { mutableStateOf("") }
     var showDialog by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<Error?>(null) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -131,17 +133,13 @@ fun PayScreen(viewModel: HomeViewModel) {
                             .border(
                                 width = if (balance) 2.dp else 0.dp,
                                 color = if (balance) Color.Blue else Color.Transparent,
-                                shape = RoundedCornerShape(8.dp)
-                            ),
+                                shape = RoundedCornerShape(8.dp)),
                         colors = CardDefaults.elevatedCardColors(
                             containerColor = Color(0xFF2C2C2C)
                         ),
                     ) {
                         Box(
-                            modifier = Modifier.clickable {
-                                balance = true; selectedCard = null; tipodePago =
-                                PaymentType.BALANCE
-                            },
+                            modifier = Modifier.clickable { balance = true ; selectedCard = null; tipodePago = PaymentType.BALANCE },
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.logo2),
@@ -156,9 +154,7 @@ fun PayScreen(viewModel: HomeViewModel) {
                         Cards(
                             tarjeta = card,
                             selected = card == selectedCard,
-                            onClick = {
-                                selectedCard = card; balance = false; tipodePago = PaymentType.CARD
-                            }
+                            onClick = { selectedCard = card; balance = false; tipodePago = PaymentType.CARD }
                         )
                     }
                 }
@@ -190,7 +186,7 @@ fun PayScreen(viewModel: HomeViewModel) {
                     },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
-                    placeholder = { Text(text = "500") }
+                    placeholder = { Text( text = "500") }
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -261,7 +257,10 @@ fun PayScreen(viewModel: HomeViewModel) {
                             cardId = selectedCard?.id,
                             receiverEmail = cvu,
                         )
-                    ); valueToPay = ""; cvu = ""; descripcion = "";
+                    )
+                    valueToPay = ""
+                    cvu = ""
+                    descripcion = ""
                     if (uiState.error != null) {
                         error = uiState.error
                         showDialog = true
