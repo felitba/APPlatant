@@ -31,5 +31,7 @@
     <string name="qr">QR code</string>
     <string name="error_invalid_amount">Invalid amount. Use positive numbers.</string>
     <string name="icono">Card icon</string>
+    <string name="confirm_logout">Are you sure you want to log out</string>
+
 
 </resources>

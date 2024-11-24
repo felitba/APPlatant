@@ -92,7 +92,7 @@ fun CardsScreen(
                             )
                         {
                             when {
-                                //Ignorar este warning. Si que puede ser NULL, cuando esta fetcheando datos.
+                                //Ignorar este warning. Si que puede ser NULL: cuando esta fetcheando datos.
                                 uiState.cards ==null -> {
                                     item {
                                         //TODO: loading Data screen appears weird. Fix it.

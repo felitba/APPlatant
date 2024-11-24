@@ -16,9 +16,10 @@ data class HomeUiState(
     val currentCard: Card? = null,
     val isWriting: Boolean = false,
     val errorMessage: Boolean = false,
+    val aboutToLogOut: Boolean = false,
 )
 
-val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated
-val HomeUiState.canGetAllCards: Boolean get() = isAuthenticated
+//val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated
+//val HomeUiState.canGetAllCards: Boolean get() = isAuthenticated
 val HomeUiState.canAddCard: Boolean get() = isAuthenticated
 val HomeUiState.canDeleteCard: Boolean get() = isAuthenticated && currentCard != null

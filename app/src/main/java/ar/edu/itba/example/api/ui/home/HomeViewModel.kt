@@ -63,6 +63,13 @@ class HomeViewModel(
         }
     )
 
+    fun logOutMessageDisplays() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(aboutToLogOut = !currentState.aboutToLogOut) }
+        },
+        { state, _ -> state }
+    )
+
 //    fun getCurrentUser() = runOnViewModelScope(
 //        { userRepository.getCurrentUser(uiState.currentUser == null) },
 //        { state, response -> state.copy(currentUser = response) }
