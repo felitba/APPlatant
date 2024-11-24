@@ -32,7 +32,7 @@
     <string name="error_invalid_amount">Invalid amount. Use positive numbers.</string>
     <string name="icono">Card icon</string>
     <string name="confirm_logout">Are you sure you want to log out</string>
-    <string name="confirm_card_ends_in">Confirm eliminating card ending in</string>
+    <string name="confirm_eliminate_card">Confirm eliminating card with number</string>
 
 
 </resources>

@@ -202,9 +202,10 @@ fun CardsScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
+                                text = stringResource(id = R.string.confirm_eliminate_card) + " : "+ uiState.currentCard!!.number,
                                 style = typography.bodyMedium,
-                                modifier = Modifier.padding(16.dp)
+                                modifier = Modifier.padding(16.dp),
+                                fontSize = typography.bodyMedium.fontSize
                             )
                             Row{
                                 Button(onClick = { viewModel.displayEliminateCardMessage()},
@@ -217,7 +218,8 @@ fun CardsScreen(
                                     viewModel.displayEliminateCardMessage()
                                     viewModel.deleteCard(currentCard.id!!)
                                 }) {
-                                    Text(stringResource(id = R.string.confirm))
+                                    Text(stringResource(id = R.string.confirm),
+                                    )
                                 }
                             }
                         }
