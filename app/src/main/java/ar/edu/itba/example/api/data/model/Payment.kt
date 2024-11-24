@@ -11,10 +11,11 @@ class Payment(
     var amount: Double,
     var description: String,
     var type: PaymentType,
-    var pending: Boolean,
+    var pending: Boolean?=null,
     var createdAt: Date? = null,
     var updatedAt: Date? = null,
     var card: Card? = null,
+    var cardId: Int? = null,
     var linkUuid: String? = null,
     var receiverEmail: String? = null,
     var balanceBefore: Double? = null,
@@ -39,7 +40,8 @@ class Payment(
             card = card?.asNetworkModel(),
             linkUuid = linkUuid,
             balanceBefore = balanceBefore,
-            balanceAfter = balanceAfter
+            balanceAfter = balanceAfter,
+            cardId = cardId
         )
     }
 }

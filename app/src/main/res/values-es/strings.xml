@@ -28,7 +28,7 @@
     <string name="deposit">Depositar</string>
     <string name="metodos_de_pago">Metodos de Pago:</string>
     <string name="quantity">Monto:</string>
-    <string name="cvu">cvu o alias</string>
+    <string name="cvu">email</string>
     <string name="qr">Codigo QR</string>
     <string name="error_invalid_amount">Monto invalido. Use numeros positivos.</string>
     <string name="icono">Icono de tarjeta</string>

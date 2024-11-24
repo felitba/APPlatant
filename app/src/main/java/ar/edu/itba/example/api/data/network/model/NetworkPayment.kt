@@ -1,6 +1,5 @@
 package ar.edu.itba.example.api.data.network.model
 
-import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.Payment
 import ar.edu.itba.example.api.data.model.PaymentType
 import kotlinx.serialization.Serializable
@@ -13,10 +12,11 @@ class NetworkPayment(
     var amount: Double,
     var type: String,
     var linkUuid: String? = null,
-    var pending: Boolean,
+    var pending: Boolean?=null,
     var createdAt: String?,
     var updatedAt: String?,
     var card: NetworkCard? = null,
+    var cardId: Int? = null,
     var description: String,
     var receiverEmail: String? = null,
     var balanceBefore: Double? = null,
@@ -41,7 +41,8 @@ class NetworkPayment(
             description = description,
             linkUuid = linkUuid,
             balanceBefore =  balanceBefore,
-            balanceAfter = balanceAfter
+            balanceAfter = balanceAfter,
+            cardId = cardId
         )
     }
 }
