@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -35,6 +34,7 @@ import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
@@ -46,6 +46,10 @@ fun CardsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val lazyGridState = rememberLazyGridState()
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp > 600
+    val gridColumns = if (isTablet) GridCells.Fixed(2) else GridCells.Fixed(1)
+
 
     Box(
         modifier = Modifier
@@ -93,7 +97,7 @@ fun CardsScreen(
                         ),
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier,
-                        columns = GridCells.Fixed(1),
+                        columns = gridColumns,
                         userScrollEnabled = true,
                         state = lazyGridState,
                     )
@@ -120,15 +124,16 @@ fun CardsScreen(
                             }
                         }
                         item {
-                            Text(
-                                text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                                fontSize = typography.bodyMedium.fontSize
-                            )
+
                         }
                     }
+                    Text(
+                        text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                        fontSize = typography.bodyMedium.fontSize
+                    )
                 } else {
                     Text(text= stringResource(id = R.string.loading), Modifier.padding(16.dp))
                 }
