@@ -4,17 +4,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowWidthSizeClass
 import ar.edu.itba.example.api.MyApplication
 import ar.edu.itba.example.api.ui.home.HomeViewModel
@@ -34,14 +33,21 @@ fun AppPlatant(
 
         val adaptiveInfo = currentWindowAdaptiveInfo()
         val customNavSuiteType = with(adaptiveInfo) {
-            if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM) {
+            if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
+                if (windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT) {
+                    NavigationSuiteType.NavigationRail
+                } else {
+                    NavigationSuiteType.NavigationDrawer
+                }
+            } else if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM) {
                 NavigationSuiteType.NavigationRail
-            } else {
-                NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(adaptiveInfo)
+            }
+            else {
+                NavigationSuiteType.NavigationBar
             }
         }
 
-        AppNavGraph(navController = navController, viewModel = viewModel)
+
 
         val items = listOf(
             AppDestinations.HOME,
@@ -50,7 +56,9 @@ fun AppPlatant(
             AppDestinations.PROFILE
         )
 
-        if (currentRoute in items.map { it.route }) {
+        val showNavigationBar = currentRoute in items.map { it.route }
+
+
             NavigationSuiteScaffold(
                 navigationSuiteItems = {
                     items.forEach {
@@ -76,10 +84,13 @@ fun AppPlatant(
                         )
                     }
                 },
-                layoutType = customNavSuiteType
-            )
+
+                layoutType = if ( showNavigationBar) { customNavSuiteType } else { NavigationSuiteType.None }
+            ) {
+                AppNavGraph(navController = navController, viewModel = viewModel)
+            }
         }
-    }
+
 }
 
 @PreviewScreenSizes

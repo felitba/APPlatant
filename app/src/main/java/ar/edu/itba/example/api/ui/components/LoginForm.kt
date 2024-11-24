@@ -2,10 +2,10 @@ package ar.edu.itba.example.api.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -37,6 +37,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -52,28 +53,31 @@ fun LoginForm(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    var username by remember { mutableStateOf("")}
-    var password by remember { mutableStateOf("")}
-    var isPasswordVisible by remember { mutableStateOf(false) }
+    var username by rememberSaveable { mutableStateOf("")}
+    var password by rememberSaveable { mutableStateOf("")}
+    var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
     var wrongAttempt by remember { mutableStateOf(false) }
 
     BoxWithConstraints(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(dimensionResource(R.dimen.medium_padding))
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         val adaptiveInfo = currentWindowAdaptiveInfo()
-        val boxWidth = with(adaptiveInfo) {
+        val colWidth = with(adaptiveInfo) {
             if (windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.COMPACT) {
                 maxWidth
             } else {
                 dimensionResource(R.dimen.compact_breakpoint)
             }
         }
-        Box(
+
+        Column(
             modifier = Modifier
-                .width(boxWidth)
-                .padding(dimensionResource(R.dimen.small_padding))
+                .width(colWidth)
+                .padding(dimensionResource(R.dimen.small_padding)),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row (
                 horizontalArrangement = Arrangement.Center,
@@ -130,7 +134,7 @@ fun LoginForm(
                     },
                     trailingIcon = {
                         val image = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-                        val description = if (isPasswordVisible) "Ocultar contraseña" else "Mostrar contraseña"
+                        val description = if (isPasswordVisible) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
 
                         IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                             Icon(imageVector = image, contentDescription = description)
@@ -139,7 +143,10 @@ fun LoginForm(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(dimensionResource(R.dimen.small_padding))
+                        .padding(
+                            start = dimensionResource(R.dimen.small_padding),
+                            end = dimensionResource(R.dimen.small_padding)
+                        )
 
                 )
             }
@@ -147,7 +154,7 @@ fun LoginForm(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.small_padding))
+                    .padding( bottom = dimensionResource(R.dimen.medium_padding))
             ) {
                 ActionButton(
                     resId = R.string.login,
@@ -172,28 +179,28 @@ fun LoginForm(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.small_padding))
+                    .padding(dimensionResource(R.dimen.medium_padding))
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .weight(1f)
                         .padding(end = dimensionResource(R.dimen.small_padding)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = stringResource(R.string.forgot_password),
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .weight(1f)
                         .padding(end = dimensionResource(R.dimen.small_padding)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = stringResource(R.string.recover_password),
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable {
                             onRecoverPasswordNavigate()
@@ -205,28 +212,28 @@ fun LoginForm(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.small_padding))
+                    .padding(dimensionResource(R.dimen.medium_padding))
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .weight(1f)
                         .padding(end = dimensionResource(R.dimen.small_padding)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = stringResource(R.string.first_time),
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .weight(1f)
                         .padding(end = dimensionResource(R.dimen.small_padding)),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         text = stringResource(R.string.signin),
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.clickable {
                             onRegisterNavigate()
@@ -240,7 +247,7 @@ fun LoginForm(
     if (wrongAttempt) {
         AlertDialog(
             onDismissRequest = {
-                // TODO check behaviour
+
             },
             title = { Text(stringResource(R.string.failed_login_title)) },
             text = { Text(stringResource(R.string.failed_login_dialog)) },

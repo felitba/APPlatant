@@ -46,7 +46,6 @@ fun AppNavGraph(
         composable(route = AppDestinations.LOGIN.route) {
             LoginScreen(
                 viewModel = viewModel,
-                modifier = modifier,
                 onHomeNavigate = {
                     navController.navigate(AppDestinations.HOME.route) {
                         popUpTo(AppDestinations.LOGIN.route) { inclusive = true }

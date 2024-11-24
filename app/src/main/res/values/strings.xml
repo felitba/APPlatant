@@ -29,7 +29,7 @@
     <string name="failed_login_dialog">The username or password entered is incorrect. Please try again.</string>
     <string name="accept">Accept</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="recover_password">recover your password</string>
+    <string name="recover_password">Recover your password</string>
     <string name="first_time">First time here?</string>
     <string name="signin">Sign in</string>
 

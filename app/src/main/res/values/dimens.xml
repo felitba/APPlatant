@@ -4,5 +4,8 @@
     <dimen name="medium_padding">16dp</dimen>
     <dimen name="large_padding">24dp</dimen>
 
-    <dimen name="compact_breakpoint">600dp</dimen>
+    <dimen name="image_medium">128dp</dimen>
+    <dimen name="image_large">230dp</dimen>
+
+    <dimen name="compact_breakpoint">420dp</dimen>
 </resources>
