@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +28,7 @@ import kotlin.random.Random
 @Composable
 fun AdaptiveCard(
     card : Card,
+    isSelected:Boolean = false,
     onClick: (Card) -> Unit
 
 ) {
@@ -37,6 +40,15 @@ fun AdaptiveCard(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(10.dp)
                         .clickable(onClick = { onClick(card) })
+                        .background(
+                            //TODO: cambiar estos colores
+                            color = if (isSelected) {
+                                colorScheme.primaryContainer
+                            } else {
+                                colorScheme.surface
+
+                            }
+                        )
 
                 ) {
                     Column(

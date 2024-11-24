@@ -107,7 +107,8 @@ fun CardsScreen(
 
                                 else -> {
                                     items(items = uiState.cards!!) { item ->
-                                        AdaptiveCard(item, onClick = {viewModel.setCurrentCard(it)})
+                                        AdaptiveCard(item, isSelected = uiState.currentCard?.id == item.id,
+                                            onClick = {viewModel.setCurrentCard(it)})
                                     }
                                 }
                             }
