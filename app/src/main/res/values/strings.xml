@@ -33,6 +33,17 @@
     <string name="icono">Card icon</string>
     <string name="confirm_logout">Are you sure you want to log out</string>
     <string name="confirm_eliminate_card">Confirm eliminating card with number</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="failed_login_title">Incorrect username or password</string>
+    <string name="failed_login_dialog">The username or password entered is incorrect. Please try again.</string>
+    <string name="accept">Accept</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="recover_password">Recover your password</string>
+    <string name="first_time">First time here?</string>
+    <string name="signin">Sign in</string>
 
 
 </resources>

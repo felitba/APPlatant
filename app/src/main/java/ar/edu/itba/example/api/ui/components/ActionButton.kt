@@ -8,8 +8,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ar.edu.itba.example.api.R
 
 @Composable
 fun ActionButton(
@@ -21,7 +23,7 @@ fun ActionButton(
 ) {
     Button(
         modifier = Modifier
-            .padding(top = 16.dp, start = 12.dp, end = 12.dp),
+            .padding(top = dimensionResource(R.dimen.medium_padding), start = dimensionResource(R.dimen.medium_padding), end = dimensionResource(R.dimen.medium_padding)),
         enabled = enabled,
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
