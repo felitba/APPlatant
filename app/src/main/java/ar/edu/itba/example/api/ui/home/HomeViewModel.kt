@@ -132,6 +132,13 @@ class HomeViewModel(
         { state, _ -> state }
     )
 
+    fun changeErrorMessage() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(errorMessage = !currentState.errorMessage) }
+        },
+        { state, _ -> state }
+    )
+
     private fun observeWalletDetailStream() {
         walletDetailStreamJob = collectOnViewModelScope(
             walletRepository.walletDetailStream
