@@ -1,8 +1,11 @@
 package ar.edu.itba.example.api.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +28,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
@@ -36,58 +42,86 @@ fun CardsScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     Column(
-        modifier = Modifier
-        .fillMaxWidth()
-//        .verticalScroll(rememberScrollState())
     ){
-        ActionButton(
-            resId = R.string.add_card,
-            enabled = uiState.canAddCard,
-            icon = {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(id = R.string.add_card),
-                    modifier = Modifier
-                        .padding(
-                            top = 16.dp, start = 16.dp, end = 16.dp
-                        ),
-                )
-            },
-            onClick = {
-                val random = Random.nextInt(0, 9999)
-                val card = Card(number = "499003140861${random.toString().padStart(4, '0')}",
-                    fullName = "Christeen Mischke",
-                    expirationDate = "05/28",
-                    cvv = "215",
-                    type = CardType.CREDIT)
-                viewModel.addCard(card)
-            })
-        ActionButton(
-            resId = R.string.delete_card,
-            enabled = uiState.canDeleteCard,
-            icon = {
-                Icon(
-                    imageVector = Icons.Filled.Delete,
-                    contentDescription = stringResource(id = R.string.delete_card),
-                    modifier = Modifier
-                        .padding(
-                            top = 16.dp, start = 16.dp, end = 16.dp
-                        ),
-                )
-            },
-            onClick = {
-                val currentCard = uiState.currentCard!!
-                viewModel.deleteCard(currentCard.id!!)
-            })
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = colorScheme.onBackground)
+                .padding(top = 24.dp, bottom = 12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(id = R.string.cards),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                color = colorScheme.secondary,
+                fontSize = typography.bodyLarge.fontSize
+            )
+        }
+        Box(
+            modifier = Modifier
+//                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+
+                ActionButton(
+                    resId = R.string.add_card,
+                    enabled = uiState.canAddCard,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = stringResource(id = R.string.add_card),
+                            modifier = Modifier
+                                .padding(
+                                    top = 16.dp, start = 16.dp, end = 16.dp
+                                ),
+                        )
+                    },
+                    onClick = {
+                        val random = Random.nextInt(0, 9999)
+                        val card = Card(
+                            number = "499003140861${random.toString().padStart(4, '0')}",
+                            fullName = "Christeen Mischke",
+                            expirationDate = "05/28",
+                            cvv = "215",
+                            type = CardType.CREDIT
+                        )
+                        viewModel.addCard(card)
+                    })
+                ActionButton(
+                    resId = R.string.delete_card,
+                    enabled = uiState.canDeleteCard,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = stringResource(id = R.string.delete_card),
+                            modifier = Modifier
+                                .padding(
+                                    top = 16.dp, start = 16.dp, end = 16.dp
+                                ),
+                        )
+                    },
+                    onClick = {
+                        val currentCard = uiState.currentCard!!
+                        viewModel.deleteCard(currentCard.id!!)
+                    })
+            }
+        }
 
         if (uiState.cards != null) {
 
                 val mediumPadding = dimensionResource(R.dimen.medium_padding)
 
                 LazyVerticalGrid(
-                    contentPadding = PaddingValues(horizontal = mediumPadding),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(horizontal = mediumPadding, vertical = mediumPadding),
+                    verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier,//fillMaxWidth(),
                     columns = GridCells.Fixed(1),
                     userScrollEnabled = true
                 )
@@ -111,7 +145,7 @@ fun CardsScreen(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                            fontSize = 18.sp
+                            fontSize = typography.bodyMedium.fontSize
                         )
                     }
                 }
