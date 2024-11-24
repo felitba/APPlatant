@@ -71,7 +71,7 @@ fun CardsScreen(
                 modifier = Modifier
                     .padding(horizontal = 16.dp),
                 color = colorScheme.secondary,
-                fontSize = typography.bodyLarge.fontSize
+                fontSize = 36.sp,
             )
                 }
             Column(
@@ -214,7 +214,7 @@ fun CardsScreen(
                                     text = stringResource(id = R.string.confirm_eliminate_card) + " : " + uiState.currentCard!!.number,
                                     style = typography.bodyMedium,
                                     modifier = Modifier.padding(16.dp),
-                                    fontSize = typography.bodyMedium.fontSize
+                                    fontSize = 24.sp,
                                 )
                                 Row {
                                     Button(

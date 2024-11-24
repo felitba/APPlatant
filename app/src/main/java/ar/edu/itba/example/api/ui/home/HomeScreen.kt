@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -50,6 +51,8 @@ fun HomeScreen(
     onPayNavigate: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val configuration = LocalConfiguration.current
+    val isTablet = configuration.screenWidthDp >= 600
 
     Column(
         modifier = Modifier
@@ -79,7 +82,8 @@ fun HomeScreen(
                     )
                     Text( text = "Hi ${uiState.currentUser?.firstName} ${uiState.currentUser?.lastName}",
                         color = colorScheme.secondary,
-                        fontSize = typography.bodySmall.fontSize)
+                        fontSize = 16.sp,
+                    )
                 }
             }
 
@@ -96,8 +100,8 @@ fun HomeScreen(
                         ) {
                             Text(
                                 text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
-                                style = typography.bodyMedium,
-                                modifier = Modifier.padding(16.dp)
+                                style = typography.bodyLarge,
+                                modifier = Modifier.padding(16.dp),
                             )
                             Row{
                                 Button(onClick = { viewModel.logOutMessageDisplays()},
@@ -128,7 +132,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         .background(colorScheme.onBackground),
-                    fontSize = typography.bodyMedium.fontSize,
+                    fontSize = 36.sp,
                     color = colorScheme.secondary
                 )
                 Row {
@@ -143,7 +147,7 @@ fun HomeScreen(
                                         end = 16.dp,
                                         bottom = 16.dp
                                     ),
-                                fontSize = typography.bodyLarge.fontSize,
+                                fontSize = 36.sp,
                                 color = colorScheme.secondary
                             )
                             ActionButton(
@@ -170,7 +174,7 @@ fun HomeScreen(
                                         end = 16.dp,
                                         bottom = 16.dp
                                     ),
-                                fontSize = typography.bodyLarge.fontSize,
+                                fontSize = 36.sp,
                                 color = colorScheme.secondary
 
                             )
@@ -222,8 +226,8 @@ fun HomeScreen(
                             title = {
                                 Text(
                                     text = stringResource(id = R.string.enter_amount),
-                                    fontSize = typography.bodyMedium.fontSize,
-                                )
+                                    fontSize = 24.sp,
+                                    )
                             },
                             text = {
                                 Column {
@@ -294,7 +298,6 @@ fun HomeScreen(
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {
-                            //TODO:
                             onPayNavigate()
                         },
                         icon = {
@@ -339,43 +342,3 @@ fun HomeScreen(
             }
         }
     }
-
-//import android.content.res.Configuration
-//import androidx.compose.foundation.layout.Arrangement
-//import androidx.compose.foundation.layout.Column
-//import androidx.compose.foundation.layout.Spacer
-//import androidx.compose.foundation.layout.fillMaxSize
-//import androidx.compose.foundation.layout.size
-//import androidx.compose.material3.Text
-//import androidx.compose.runtime.Composable
-//import androidx.compose.ui.Alignment
-//import androidx.compose.ui.Modifier
-//import androidx.compose.ui.platform.LocalConfiguration
-//import androidx.compose.ui.res.stringResource
-//import androidx.compose.ui.unit.dp
-//import androidx.compose.ui.unit.sp
-//import ar.edu.itba.example.api.R
-//import ar.edu.itba.example.api.ui.components.AdaptiveCard
-//
-//@Composable
-//fun HomeScreen() {
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(
-//            text = stringResource(R.string.home),
-//            fontSize = 30.sp
-//        )
-//        Spacer(modifier = Modifier.size(20.dp))
-//        AdaptiveCard(R.string.card_title, R.string.card_description)
-//        Spacer(modifier = Modifier.size(20.dp))
-//        val configuration = LocalConfiguration.current
-//        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            Text(text = stringResource(R.string.landscape))
-//        } else {
-//            Text(text = stringResource(R.string.portrait))
-//        }
-//    }
-//}

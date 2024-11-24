@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.theme.APIMutableStateTheme
@@ -32,9 +33,6 @@ fun AdaptiveCard(
     onClick: (Card) -> Unit
 
 ) {
-    BoxWithConstraints {
-        //TODO:  adaptarlo a tablet
-        if (maxWidth < 600.dp) {
             Card {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,34 +53,33 @@ fun AdaptiveCard(
                         modifier = Modifier.padding(top = 5.dp)
                     ) {
                         Text(text = card.type.toString(),
-                            fontSize = typography.bodyMedium.fontSize
-                            )
+                            fontSize = 24.sp,                                )
+
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                             ){
                             for (i in 0..3) {
                                 Text(text = card.number.substring(i*4, i*4+4),
-                                    fontSize = typography.bodyMedium.fontSize
-                                )
+                                    fontSize = 24.sp,                                )
                             }
                             }
                         Row(
                             modifier = Modifier.padding(top = 5.dp)
                         ) {
                             Text(text = "Exp Date: ",
-                                fontSize = typography.bodyMedium.fontSize
-                            )
+                                fontSize = 24.sp,                                )
+
                             Text(text = card.expirationDate,
-                                fontSize = typography.bodyMedium.fontSize
-                            )
+                                fontSize = 24.sp,                                )
+
                         }
                         Row(
                             modifier = Modifier.padding(top = 5.dp),
                             horizontalArrangement = Arrangement.spacedBy(15.dp),
                             ) {
                             Text(text = card.fullName,
-                                fontSize = typography.bodyMedium.fontSize
-                            )
+                                fontSize = 24.sp,                                )
+
                             //TODO: cambiar por el logo de Visa, mastercard, o lo que sea.
                             Icon(imageVector = Icons.Filled.Face, contentDescription = null)
                         }
@@ -91,7 +88,8 @@ fun AdaptiveCard(
 
                 }
             }
-        } else {
+        }
+/*else {
             Card {
                 Row(modifier = Modifier.padding(10.dp)) {
                     Column(
@@ -126,7 +124,9 @@ fun AdaptiveCard(
             }
         }
     }
-}
+
+ */
+
 
 @Preview(showBackground = true, widthDp = 500)
 @Composable
