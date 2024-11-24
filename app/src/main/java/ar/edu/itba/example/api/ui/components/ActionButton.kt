@@ -23,7 +23,7 @@ fun ActionButton(
 ) {
     Button(
         modifier = Modifier
-            .padding(top = dimensionResource(R.dimen.medium_padding), start = dimensionResource(R.dimen.medium_padding), end = dimensionResource(R.dimen.medium_padding)),
+            .padding(top = dimensionResource(R.dimen.medium_padding), start = dimensionResource(R.dimen.intermediate_padding), end = dimensionResource(R.dimen.intermediate_padding)),
         enabled = enabled,
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
@@ -35,13 +35,13 @@ fun ActionButton(
                     if (displayText == true) {
                         Text(
                             text = stringResource(resId),
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(dimensionResource(R.dimen.small_padding))
                         )
                     }
                 } else {
                     Text(
                         text = stringResource(resId),
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(dimensionResource(R.dimen.small_padding))
                     )
                 }
             }
