@@ -2,6 +2,7 @@ package ar.edu.itba.example.api.ui.home
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,9 +19,12 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -36,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.ui.components.ActionButton
 
@@ -61,11 +66,12 @@ fun HomeScreen(
                     onClick = {
                         viewModel.login("johndoe@email.com", "1234567890")
                     })
-            } else {
+            }
+            if (uiState.isAuthenticated) {
                 ActionButton(
                     resId = R.string.logout,
                     onClick = {
-                        viewModel.logout()
+                        viewModel.logOutMessageDisplays()
                     },
                     icon = {
                         Icon(
@@ -74,6 +80,42 @@ fun HomeScreen(
                         )
                     }
                 )
+            }
+
+            if (uiState.aboutToLogOut) {
+                viewModel.getCurrentUser()
+                Dialog(onDismissRequest = { viewModel.logOutMessageDisplays() }) {
+                    Surface(
+                        shape = shapes.medium,
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
+                                style = typography.bodyMedium,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                            Row{
+                                Button(onClick = { viewModel.logOutMessageDisplays()},
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                ) {
+                                    Text(stringResource(id = R.string.cancel),
+                                    )
+                                }
+                                Button(onClick = {
+                                    viewModel.logOutMessageDisplays()
+                                    viewModel.logout()
+                                    //TODO: navegar a la pag. de login.
+                                }) {
+                                    Text(stringResource(id = R.string.confirm))
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -84,64 +126,72 @@ fun HomeScreen(
                 Text(
                     text = stringResource(id = R.string.balance_amount),
                     modifier = Modifier
-                        //TODO: cambiar el padding con Theme.kt.
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         .background(colorScheme.onBackground),
                     fontSize = typography.bodyMedium.fontSize,
                     color = colorScheme.secondary
                 )
-                Row{
-                        if (uiState.walletDetail != null) {
-                            //TODO: deberia estar en una componente.
-                            if (uiState.showBalance) {
-                                Text(
-                                    text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
-                                    modifier = Modifier
-                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
-                                    fontSize = typography.bodyLarge.fontSize,
-                                    color = colorScheme.secondary
-                                )
-                                ActionButton(
-                                    resId = R.string.change_balance,
-                                    onClick = {
-                                        viewModel.changeBalanceView()
-                                    },
-                                    icon = {
-                                        Icon(
-                                            imageVector = Icons.Outlined.Visibility,
-                                            contentDescription = stringResource(id = R.string.balance_amount),
-                                            modifier = Modifier
-                                                .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
-                                        )
-                                    }
-                                )
-                            } else {
-                                Text(
-                                    text = "\$*****.**",
-                                    modifier = Modifier
-                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp),
-                                    fontSize = typography.bodyLarge.fontSize,
-                                    color = colorScheme.secondary
+                Row {
+                    if (uiState.walletDetail != null) {
+                        if (uiState.showBalance) {
+                            Text(
+                                text = "\$${uiState.walletDetail?.balance ?: "Unknown"}",
+                                modifier = Modifier
+                                    .padding(
+                                        top = 16.dp,
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        bottom = 16.dp
+                                    ),
+                                fontSize = typography.bodyLarge.fontSize,
+                                color = colorScheme.secondary
+                            )
+                            ActionButton(
+                                resId = R.string.change_balance,
+                                onClick = {
+                                    viewModel.changeBalanceView()
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Visibility,
+                                        contentDescription = stringResource(id = R.string.balance_amount),
+                                        modifier = Modifier
+                                            .padding(end = 16.dp, bottom = 16.dp),
+                                    )
+                                }
+                            )
+                        } else {
+                            Text(
+                                text = "\$*****.**",
+                                modifier = Modifier
+                                    .padding(
+                                        top = 16.dp,
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        bottom = 16.dp
+                                    ),
+                                fontSize = typography.bodyLarge.fontSize,
+                                color = colorScheme.secondary
 
-                                )
-                                ActionButton(
-                                    resId = R.string.change_balance,
-                                    onClick = {
-                                        viewModel.changeBalanceView()
-                                    },
-                                    icon = {
-                                        Icon(
-                                            imageVector = Icons.Outlined.VisibilityOff,
-                                            contentDescription = stringResource(id = R.string.balance_amount),
-                                            modifier = Modifier
-                                                .padding(
-                                                    top = 16.dp, start = 16.dp, end = 16.dp,bottom = 16.dp
-                                                ),
-                                        )
-                                    }
-                                )
+                            )
+                            ActionButton(
+                                resId = R.string.change_balance,
+                                onClick = {
+                                    viewModel.changeBalanceView()
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.VisibilityOff,
+                                        contentDescription = stringResource(id = R.string.balance_amount),
+                                        modifier = Modifier
+                                            .padding(
+                                                end = 16.dp, bottom = 16.dp
+                                            ),
+                                    )
+                                }
+                            )
+                        }
                     }
-                }
                 }
                 Row(
                     modifier = Modifier
@@ -194,13 +244,18 @@ fun HomeScreen(
                                             viewModel.changeIsWritingAmount()
                                             depositAmount = ""
                                         } else {
-                                            // TODO: Handle error case with another method.
-                                            Log.d("DepositScreen", "Invalid deposit amount: $depositAmount")
+                                            viewModel.changeErrorMessage()
+                                            Log.d(
+                                                "DepositScreen",
+                                                "Invalid deposit amount: $depositAmount"
+                                            )
                                         }
                                     }
                                 ) {
-                                    Text(text = stringResource(id = R.string.confirm),
-                                            fontSize = typography.bodySmall.fontSize)
+                                    Text(
+                                        text = stringResource(id = R.string.confirm),
+                                        fontSize = typography.bodySmall.fontSize
+                                    )
                                 }
                             },
                             dismissButton = {
@@ -211,6 +266,31 @@ fun HomeScreen(
                                 }
                             })
                     }
+
+                    if (uiState.errorMessage) {
+                        Dialog(onDismissRequest = { viewModel.changeErrorMessage() }) {
+                            Surface(
+                                shape = shapes.medium,
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = stringResource(id = R.string.error_invalid_amount),
+                                        style = typography.bodyMedium,
+                                        color = colorScheme.error,
+                                        modifier = Modifier.padding(16.dp)
+                                    )
+                                    Button(onClick = { viewModel.changeErrorMessage() }) {
+                                        Text(text = "OK")
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     ActionButton(
                         resId = R.string.pay,
                         onClick = {
@@ -228,11 +308,10 @@ fun HomeScreen(
                         },
                         displayText = true
                     )
-                    //TODO: definir si vamos a implementar cobrar o no.
                     ActionButton(
                         resId = R.string.charge,
                         onClick = {
-                            //
+                            //TODO: definir si vamos a implementar cobrar o no.
                         },
                         icon = {
                             Icon(

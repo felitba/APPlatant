@@ -66,10 +66,17 @@ class HomeViewModel(
         }
     )
 
-//    fun getCurrentUser() = runOnViewModelScope(
-//        { userRepository.getCurrentUser(uiState.currentUser == null) },
-//        { state, response -> state.copy(currentUser = response) }
-//    )
+    fun logOutMessageDisplays() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(aboutToLogOut = !currentState.aboutToLogOut) }
+        },
+        { state, _ -> state }
+    )
+
+    fun getCurrentUser() = runOnViewModelScope(
+        { userRepository.getCurrentUser(_uiState.value.currentUser == null) },
+        { state, response -> state.copy(currentUser = response) }
+    )
 
 /* Deposit Section */
     fun deposit(amount: Double) = runOnViewModelScope(
@@ -99,13 +106,6 @@ class HomeViewModel(
 
     /* Cards Section */
 
-//    fun getCards() = runOnViewModelScope(
-//        {
-//            walletRepository.getCards()
-//        },
-//        { state, response -> state.copy(cards = response) }
-//    )
-
     fun addCard(card: Card) = runOnViewModelScope(
         {
             walletRepository.addCard(card)
@@ -126,6 +126,27 @@ class HomeViewModel(
                 cards = null
             )
         }
+    )
+
+    fun setCurrentCard(card: Card) = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(currentCard = card) }
+        },
+        { state, _ -> state }
+    )
+
+    fun displayEliminateCardMessage() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(eliminateCardMessage = !currentState.eliminateCardMessage) }
+        },
+        { state, _ -> state }
+    )
+
+    fun changeErrorMessage() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(errorMessage = !currentState.errorMessage) }
+        },
+        { state, _ -> state }
     )
 
     private fun observeWalletDetailStream() {

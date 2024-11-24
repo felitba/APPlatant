@@ -25,5 +25,14 @@
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
     <string name="deposit">Deposit</string>
+    <string name="metodos_de_pago">Payment Methods:</string>
+    <string name="quantity">Amount:</string>
+    <string name="cvu">cvu or alias</string>
+    <string name="qr">QR code</string>
+    <string name="error_invalid_amount">Invalid amount. Use positive numbers.</string>
+    <string name="icono">Card icon</string>
+    <string name="confirm_logout">Are you sure you want to log out</string>
+    <string name="confirm_card_ends_in">Confirm eliminating card ending in</string>
+
 
 </resources>

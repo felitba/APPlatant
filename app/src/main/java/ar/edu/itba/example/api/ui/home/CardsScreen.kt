@@ -1,10 +1,12 @@
 package ar.edu.itba.example.api.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -21,113 +23,207 @@ import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.CardType
 import ar.edu.itba.example.api.ui.components.ActionButton
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
 
+//TODO: show more/show less feature
 @Composable
 fun CardsScreen(
     viewModel: HomeViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Column(
+    Box(
         modifier = Modifier
-        .fillMaxWidth()
-//        .verticalScroll(rememberScrollState())
-    ){
-        ActionButton(
-            resId = R.string.add_card,
-            enabled = uiState.canAddCard,
-            icon = {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(id = R.string.add_card),
+//                    .fillMaxSize()
+                     .padding(16.dp)
+                    .background(color = colorScheme.background)
+
+    ) {
+            //Title Section.
+            Column(
+                modifier = Modifier
+                    .background(color = colorScheme.onBackground)
+                    .padding(top = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.cards),
                     modifier = Modifier
-                        .padding(
-                            top = 16.dp, start = 16.dp, end = 16.dp
-                        ),
+                        .padding(horizontal = 16.dp),
+                    color = colorScheme.secondary,
+                    fontSize = typography.bodyLarge.fontSize
                 )
-            },
-            onClick = {
-                val random = Random.nextInt(0, 9999)
-                val card = Card(number = "499003140861${random.toString().padStart(4, '0')}",
-                    fullName = "Christeen Mischke",
-                    expirationDate = "05/28",
-                    cvv = "215",
-                    type = CardType.CREDIT)
-                viewModel.addCard(card)
-            })
-        ActionButton(
-            resId = R.string.delete_card,
-            enabled = uiState.canDeleteCard,
-            icon = {
-                Icon(
-                    imageVector = Icons.Filled.Delete,
-                    contentDescription = stringResource(id = R.string.delete_card),
+                Column(
                     modifier = Modifier
-                        .padding(
-                            top = 16.dp, start = 16.dp, end = 16.dp
-                        ),
-                )
-            },
-            onClick = {
-                val currentCard = uiState.currentCard!!
-                viewModel.deleteCard(currentCard.id!!)
-            })
+                        .background(color = colorScheme.background)
+                        .padding(top = 24.dp, bottom = 12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
 
-        if (uiState.cards != null) {
+                ) {
 
-                val mediumPadding = dimensionResource(R.dimen.medium_padding)
+                    if (uiState.cards != null) {
 
-                LazyVerticalGrid(
-                    contentPadding = PaddingValues(horizontal = mediumPadding),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth(),
-                    columns = GridCells.Fixed(1),
-                    userScrollEnabled = true
-                )
-                {
-                    when {
-                        uiState.cards!!.isEmpty() -> {
+                        val mediumPadding = dimensionResource(R.dimen.medium_padding)
+
+                        LazyVerticalGrid(
+                            contentPadding = PaddingValues(
+                                horizontal = mediumPadding,
+                                vertical = mediumPadding,
+                                ),
+                            verticalArrangement = Arrangement.spacedBy(
+                                16.dp,
+                                Alignment.CenterVertically
+                            ),
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier,//fillMaxWidth(),
+                            columns = GridCells.Fixed(1),
+                            userScrollEnabled = true,
+                            state = rememberLazyGridState(),
+                            )
+                        {
+                            when {
+                                //TODO: cambiar uiState cuando esta fetcheando datos y mostrar otra pantalla.
+                                //Ignorar este warning. Si que puede ser NULL: cuando esta fetcheando datos.
+                                uiState.cards ==null -> {
+                                    item {
+                                        Text("Loading data...", Modifier.padding(16.dp))
+                                    }
+                                }
+                                uiState.cards!!.isEmpty() -> {
+                                    item {
+                                        Text("No cards available", Modifier.padding(16.dp))
+                                    }
+                                }
+
+                                else -> {
+                                    items(items = uiState.cards!!) { item ->
+                                        AdaptiveCard(item, isSelected = uiState.currentCard?.id == item.id,
+                                            onClick = {viewModel.setCurrentCard(it)})
+                                    }
+                                }
+                            }
                             item {
-                                Text("No cards available", Modifier.padding(16.dp))
+                                Text(
+                                    text = "Total Cards: ${uiState.cards!!.size}",
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                    fontSize = typography.bodyMedium.fontSize
+                                )
                             }
                         }
-
-                        else -> {
-                            items(items = uiState.cards!!) { item ->
-                                AdaptiveCard(item)
-                            }
-                        }
-                    }
-                    item {
-                        Text(
-                            text = "Total Cards: ${uiState.cards!!.size}",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                            fontSize = 18.sp
-                        )
+                    } else {
+                        Text("Loading data...", Modifier.padding(16.dp))
                     }
                 }
-        }
-        else {
-            Text("Loading data...", Modifier.padding(16.dp))
-        }
-    }
+            }
 
-    if (uiState.error != null) {
-        Text(
-            text = "${uiState.error!!.code} - ${uiState.error!!.message}",
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-            fontSize = 18.sp
-        )
+        if (uiState.error != null) {
+            Text(
+                text = "${uiState.error!!.code} - ${uiState.error!!.message}",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                fontSize = 18.sp
+            )
+        }
+
+        Column(
+            modifier = Modifier.align(Alignment.BottomEnd),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+
+            //TODO: remove this add button, is only for testing purposes.
+            ActionButton(
+                resId = R.string.add_card,
+                enabled = uiState.canAddCard,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = stringResource(id = R.string.add_card),
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp, start = 16.dp, end = 16.dp
+                            ),
+                    )
+                },
+                onClick = {
+                    val random = Random.nextInt(0, 9999)
+                    val card = Card(
+                        number = "499003140861${random.toString().padStart(4, '0')}",
+                        fullName = "Christeen Mischke",
+                        expirationDate = "05/28",
+                        cvv = "215",
+                        type = CardType.CREDIT
+                    )
+                    viewModel.addCard(card)
+                })
+            ActionButton(
+                resId = R.string.delete_card,
+                enabled = uiState.canDeleteCard,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Filled.Delete,
+                        contentDescription = stringResource(id = R.string.delete_card),
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp, start = 16.dp, end = 16.dp
+                            ),
+                    )
+                },
+                onClick = {
+                    viewModel.displayEliminateCardMessage()
+                })
+
+            if (uiState.eliminateCardMessage){
+                 val currentCard = uiState.currentCard!!
+
+                Dialog(onDismissRequest = { viewModel.displayEliminateCardMessage()}) {
+                    Surface(
+                        shape = shapes.medium,
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
+                                style = typography.bodyMedium,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                            Row{
+                                Button(onClick = { viewModel.displayEliminateCardMessage()},
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                ) {
+                                    Text(stringResource(id = R.string.cancel),
+                                    )
+                                }
+                                Button(onClick = {
+                                    viewModel.displayEliminateCardMessage()
+                                    viewModel.deleteCard(currentCard.id!!)
+                                }) {
+                                    Text(stringResource(id = R.string.confirm))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -19,10 +19,13 @@ data class HomeUiState(
 
     val isPaymentInProgress: Boolean = false,
     val payments: List<Payment>? = emptyList()
+    val errorMessage: Boolean = false,
+    val aboutToLogOut: Boolean = false,
+    val eliminateCardMessage: Boolean = false
 )
 
 val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated
-val HomeUiState.canGetAllCards: Boolean get() = isAuthenticated
+//val HomeUiState.canGetAllCards: Boolean get() = isAuthenticated
 val HomeUiState.canAddCard: Boolean get() = isAuthenticated
 val HomeUiState.canDeleteCard: Boolean get() = isAuthenticated && currentCard != null
 

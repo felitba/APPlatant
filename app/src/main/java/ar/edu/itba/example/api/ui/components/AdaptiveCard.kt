@@ -1,14 +1,19 @@
 package ar.edu.itba.example.api.ui.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,38 +28,61 @@ import kotlin.random.Random
 @Composable
 fun AdaptiveCard(
     card : Card,
+    isSelected:Boolean = false,
+    onClick: (Card) -> Unit
+
 ) {
     BoxWithConstraints {
-        //TODO: por ahora no veo la necesidad de adaptarlo a pantalla...
-        //deberia mostrar lo mismo. Capaz q box constraints es innecesario.
+        //TODO:  adaptarlo a tablet
         if (maxWidth < 600.dp) {
             Card {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(10.dp)
+                        .clickable(onClick = { onClick(card) })
+                        .background(
+                            //TODO: cambiar estos colores
+                            color = if (isSelected) {
+                                colorScheme.primaryContainer
+                            } else {
+                                colorScheme.surface
+
+                            }
+                        )
+
                 ) {
                     Column(
                         modifier = Modifier.padding(top = 5.dp)
                     ) {
-                        Text(text = card.type.toString())
+                        Text(text = card.type.toString(),
+                            fontSize = typography.bodyMedium.fontSize
+                            )
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
                             ){
                             for (i in 0..3) {
-                                Text(text = card.number.substring(i*4, i*4+4))
+                                Text(text = card.number.substring(i*4, i*4+4),
+                                    fontSize = typography.bodyMedium.fontSize
+                                )
                             }
                             }
                         Row(
                             modifier = Modifier.padding(top = 5.dp)
                         ) {
-                            Text(text = "Exp Date: ")
-                            Text(text = card.expirationDate)
+                            Text(text = "Exp Date: ",
+                                fontSize = typography.bodyMedium.fontSize
+                            )
+                            Text(text = card.expirationDate,
+                                fontSize = typography.bodyMedium.fontSize
+                            )
                         }
                         Row(
                             modifier = Modifier.padding(top = 5.dp),
                             horizontalArrangement = Arrangement.spacedBy(15.dp),
                             ) {
-                            Text(text = card.fullName)
+                            Text(text = card.fullName,
+                                fontSize = typography.bodyMedium.fontSize
+                            )
                             //TODO: cambiar por el logo de Visa, mastercard, o lo que sea.
                             Icon(imageVector = Icons.Filled.Face, contentDescription = null)
                         }
@@ -109,7 +137,8 @@ fun AdaptiveCardCardSmallPreview() {
             fullName = "Christeen Mischke",
             expirationDate = "05/28",
             cvv = "215",
-            type = CardType.CREDIT))
+            type = CardType.CREDIT),
+            onClick = {})
     }
 }
 
@@ -126,7 +155,8 @@ fun AdaptiveCardCardPreview() {
                     expirationDate = "05/28",
                     cvv = "215",
                     type = CardType.CREDIT
-                )
+                ),
+                onClick = {}
             )
 //            AdaptiveCard(
 //                Card(
