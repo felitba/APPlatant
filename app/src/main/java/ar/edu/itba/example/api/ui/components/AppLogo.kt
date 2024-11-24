@@ -36,12 +36,12 @@ fun AppLogo() {
                 Image(
                     painter = painterResource(R.drawable.platant),
                     contentDescription = stringResource(R.string.app_name),
-                    Modifier.size(dimensionResource(R.dimen.image_medium)),
+                    Modifier.size(dimensionResource(R.dimen.image_medium))
                 )
                 Text(
                     text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
-                    color = Color.White,
+                    color = Color.White
                 )
             } else {
                 Image(
@@ -51,7 +51,8 @@ fun AppLogo() {
                 )
                 Text(
                     text = stringResource(R.string.app_name),
-                    style = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Bold)
+                    style = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Bold),
+                    color = Color.White
                 )
             }
         }

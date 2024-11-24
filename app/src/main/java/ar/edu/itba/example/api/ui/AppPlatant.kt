@@ -59,37 +59,37 @@ fun AppPlatant(
         val showNavigationBar = currentRoute in items.map { it.route }
 
 
-            NavigationSuiteScaffold(
-                navigationSuiteItems = {
-                    items.forEach {
-                        item(
-                            icon = {
-                                Icon(
-                                    it.icon,
-                                    contentDescription = stringResource(it.contentDescription)
-                                )
-                            },
-                            label = { Text(stringResource(it.label)) },
-                            alwaysShowLabel = true,
-                            selected = currentRoute == it.route,
-                            onClick = {
-                                navController.navigate(it.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
+        NavigationSuiteScaffold(
+            navigationSuiteItems = {
+                items.forEach {
+                    item(
+                        icon = {
+                            Icon(
+                                it.icon,
+                                contentDescription = stringResource(it.contentDescription)
+                            )
+                        },
+                        label = { Text(stringResource(it.label)) },
+                        alwaysShowLabel = true,
+                        selected = currentRoute == it.route,
+                        onClick = {
+                            navController.navigate(it.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
                                 }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                        )
-                    }
-                },
+                        }
+                    )
+                }
+            },
 
-                layoutType = if ( showNavigationBar) { customNavSuiteType } else { NavigationSuiteType.None }
-            ) {
-                AppNavGraph(navController = navController, viewModel = viewModel)
-            }
+            layoutType = if ( showNavigationBar) { customNavSuiteType } else { NavigationSuiteType.None }
+        ) {
+            AppNavGraph(navController = navController, viewModel = viewModel)
         }
+    }
 
 }
 

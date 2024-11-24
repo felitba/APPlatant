@@ -60,13 +60,6 @@ fun HomeScreen(
         Column(
             modifier = Modifier.align(alignment = Alignment.End)
         ) {
-//            if (!uiState.isAuthenticated) {
-//                ActionButton(
-//                    resId = R.string.login,
-//                    onClick = {
-//                        viewModel.login("johndoe@email.com", "1234567890")
-//                    })
-//            }
             if (uiState.isAuthenticated) {
                 viewModel.getCurrentUser()
 
