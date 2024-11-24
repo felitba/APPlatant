@@ -41,6 +41,8 @@ fun AppPlatant(
             }
         }
 
+        AppNavGraph(navController = navController, viewModel = viewModel)
+
         val items = listOf(
             AppDestinations.HOME,
             AppDestinations.PAY,
@@ -48,34 +50,34 @@ fun AppPlatant(
             AppDestinations.PROFILE
         )
 
-        NavigationSuiteScaffold(
-            navigationSuiteItems = {
-                items.forEach { destination ->
-                    item(
-                        icon = {
-                            Icon(
-                                painter = painterResource(id = destination.icon),
-                                contentDescription = stringResource(destination.contentDescription)
-                            )
-                        },
-                        label = { Text(stringResource(destination.label)) },
-                        alwaysShowLabel = true,
-                        selected = currentRoute == destination.route,
-                        onClick = {
-                            navController.navigate(destination.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+        if (currentRoute in items.map { it.route }) {
+            NavigationSuiteScaffold(
+                navigationSuiteItems = {
+                    items.forEach {
+                        item(
+                            icon = {
+                                Icon(
+                                    it.icon,
+                                    contentDescription = stringResource(it.contentDescription)
+                                )
+                            },
+                            label = { Text(stringResource(it.label)) },
+                            alwaysShowLabel = true,
+                            selected = currentRoute == it.route,
+                            onClick = {
+                                navController.navigate(it.route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
                             }
-                        }
-                    )
-                }
-            },
-            layoutType = customNavSuiteType
-        ) {
-            AppNavGraph(navController = navController, viewModel = viewModel)
+                        )
+                    }
+                },
+                layoutType = customNavSuiteType
+            )
         }
     }
 }

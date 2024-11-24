@@ -22,6 +22,16 @@
     <string name="pay">Pagar</string>
     <string name="charge">Cobrar</string>
     <string name ="exp_date">Fecha Exp.</string>
-
+    <string name="username">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="hide_password">Ocultar contraseña</string>
+    <string name="failed_login_title">Nombre de usuario o contraseña incorrecta</string>
+    <string name="failed_login_dialog">El nombre de usuario o contraseña insgresada es inconrrecta. Vuelve a intentarlo.</string>
+    <string name="accept">Aceptar</string>
+    <string name="forgot_password">Olvidaste tu contraseña?</string>
+    <string name="recover_password">Recupera to contraseña</string>
+    <string name="first_time">Primera vez acá?</string>
+    <string name="signin">Registrarse</string>
 
 </resources>
