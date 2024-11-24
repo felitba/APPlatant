@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.data.model.Card
+import ar.edu.itba.example.api.data.model.Error
 import ar.edu.itba.example.api.data.model.Payment
 import ar.edu.itba.example.api.data.model.PaymentType
 
@@ -67,6 +68,8 @@ fun PayScreen(viewModel: HomeViewModel) {
     var balance by remember { mutableStateOf(false) }
     var tipodePago by remember { mutableStateOf(PaymentType.CARD) }
     var descripcion by remember { mutableStateOf("") }
+    var showDialog by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<Error?>(null) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -128,13 +131,17 @@ fun PayScreen(viewModel: HomeViewModel) {
                             .border(
                                 width = if (balance) 2.dp else 0.dp,
                                 color = if (balance) Color.Blue else Color.Transparent,
-                                shape = RoundedCornerShape(8.dp)),
+                                shape = RoundedCornerShape(8.dp)
+                            ),
                         colors = CardDefaults.elevatedCardColors(
                             containerColor = Color(0xFF2C2C2C)
                         ),
                     ) {
                         Box(
-                            modifier = Modifier.clickable { balance = true ; selectedCard = null; tipodePago = PaymentType.BALANCE },
+                            modifier = Modifier.clickable {
+                                balance = true; selectedCard = null; tipodePago =
+                                PaymentType.BALANCE
+                            },
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.logo2),
@@ -149,7 +156,9 @@ fun PayScreen(viewModel: HomeViewModel) {
                         Cards(
                             tarjeta = card,
                             selected = card == selectedCard,
-                            onClick = { selectedCard = card; balance = false; tipodePago = PaymentType.CARD }
+                            onClick = {
+                                selectedCard = card; balance = false; tipodePago = PaymentType.CARD
+                            }
                         )
                     }
                 }
@@ -181,10 +190,18 @@ fun PayScreen(viewModel: HomeViewModel) {
                     },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
-                    placeholder = { Text( text = "500") }
+                    placeholder = { Text(text = "500") }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp)) // Add spacing before next element
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(id = R.string.destinatary),
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 8.dp, bottom = 6.dp),
+                    color = Color.Black
+                )
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
@@ -213,6 +230,15 @@ fun PayScreen(viewModel: HomeViewModel) {
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(id = R.string.description),
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 8.dp, bottom = 6.dp),
+                    color = Color.Black
+                )
                 OutlinedTextField(
                     value = descripcion,
                     onValueChange = { descripcion = it },
@@ -220,18 +246,27 @@ fun PayScreen(viewModel: HomeViewModel) {
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
                     shape = RoundedCornerShape(16.dp),
-                    placeholder = { Text( text = "Pizza") }
+                    placeholder = { Text(text = "Pizza") },
+                    singleLine = true
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             ElevatedButton(
-                onClick = { viewModel.makePayment(Payment(
-                    amount = valueToPay.toDouble(),
-                    description = descripcion,
-                    type = tipodePago,
-                    cardId = selectedCard?.id,
-                    receiverEmail = cvu,
-                )); valueToPay = ""; cvu = "" },
+                onClick = {
+                    viewModel.makePayment(
+                        Payment(
+                            amount = valueToPay.toDouble(),
+                            description = descripcion,
+                            type = tipodePago,
+                            cardId = selectedCard?.id,
+                            receiverEmail = cvu,
+                        )
+                    ); valueToPay = ""; cvu = ""; descripcion = "";
+                    if (uiState.error != null) {
+                        error = uiState.error
+                        showDialog = true
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
@@ -243,8 +278,25 @@ fun PayScreen(viewModel: HomeViewModel) {
                     textAlign = TextAlign.Center
                 )
             }
+            if (showDialog) {
+                ApiError(error!!, onDismiss = { showDialog = false })
+            }
         }
     }
+}
+
+@Composable
+fun ApiError(error: Error, onDismiss: () -> Unit) {
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = "Error:" + error.code.toString()) },
+        text = { Text(text = error.message) },
+        confirmButton = {
+            androidx.compose.material3.TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.ok))
+            }
+        }
+    )
 }
 
 @Composable

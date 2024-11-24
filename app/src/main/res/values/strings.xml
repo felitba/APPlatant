@@ -44,6 +44,12 @@
     <string name="recover_password">Recover your password</string>
     <string name="first_time">First time here?</string>
     <string name="signin">Sign in</string>
+    <string name="ok">Accept</string>
+    <string name="description">Description:</string>
+    <string name="destinatary">Destinatary:</string>
+    <string name="profile_picture">User Photo</string>
+    <string name="edit_profile">Edit Profile</string>
+
 
 
 </resources>
