@@ -53,6 +53,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.data.model.Card
+import ar.edu.itba.example.api.data.model.Payment
+import ar.edu.itba.example.api.data.model.PaymentType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +65,8 @@ fun PayScreen(viewModel: HomeViewModel) {
     var valueToPay by remember { mutableStateOf("") }
     var selectedCard by remember { mutableStateOf<Card?>(null) }
     var balance by remember { mutableStateOf(false) }
-
+    var tipodePago by remember { mutableStateOf(PaymentType.CARD) }
+    var descripcion by remember { mutableStateOf("") }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -131,7 +134,7 @@ fun PayScreen(viewModel: HomeViewModel) {
                         ),
                     ) {
                         Box(
-                            modifier = Modifier.clickable { balance = true ; selectedCard = null },
+                            modifier = Modifier.clickable { balance = true ; selectedCard = null; tipodePago = PaymentType.BALANCE },
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.logo2),
@@ -146,7 +149,7 @@ fun PayScreen(viewModel: HomeViewModel) {
                         Cards(
                             tarjeta = card,
                             selected = card == selectedCard,
-                            onClick = { selectedCard = card; balance = false }
+                            onClick = { selectedCard = card; balance = false; tipodePago = PaymentType.CARD }
                         )
                     }
                 }
@@ -210,10 +213,25 @@ fun PayScreen(viewModel: HomeViewModel) {
                         )
                     }
                 }
+                OutlinedTextField(
+                    value = descripcion,
+                    onValueChange = { descripcion = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    placeholder = { Text( text = "Pizza") }
+                )
             }
             Spacer(modifier = Modifier.height(16.dp))
             ElevatedButton(
-                onClick = { /* Pagar */ },
+                onClick = { viewModel.makePayment(Payment(
+                    amount = valueToPay.toDouble(),
+                    description = descripcion,
+                    type = tipodePago,
+                    cardId = selectedCard?.id,
+                    receiverEmail = cvu,
+                )); valueToPay = ""; cvu = "" },
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
