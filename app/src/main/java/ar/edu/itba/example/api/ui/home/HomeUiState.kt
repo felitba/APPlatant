@@ -17,6 +17,7 @@ data class HomeUiState(
     val isWriting: Boolean = false,
     val errorMessage: Boolean = false,
     val aboutToLogOut: Boolean = false,
+    val eliminateCardMessage: Boolean = false
 )
 
 val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated

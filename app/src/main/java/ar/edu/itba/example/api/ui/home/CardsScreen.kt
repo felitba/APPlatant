@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -26,15 +27,19 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
 
-//TODO: show more/show less feature + onClick make the card be the "current card"
+//TODO: show more/show less feature
 @Composable
 fun CardsScreen(
     viewModel: HomeViewModel
@@ -70,7 +75,6 @@ fun CardsScreen(
 
                 ) {
 
-                    //TODO: aca se podria usar HomeUiState.canGetAllCards
                     if (uiState.cards != null) {
 
                         val mediumPadding = dimensionResource(R.dimen.medium_padding)
@@ -92,10 +96,10 @@ fun CardsScreen(
                             )
                         {
                             when {
+                                //TODO: cambiar uiState cuando esta fetcheando datos y mostrar otra pantalla.
                                 //Ignorar este warning. Si que puede ser NULL: cuando esta fetcheando datos.
                                 uiState.cards ==null -> {
                                     item {
-                                        //TODO: loading Data screen appears weird. Fix it.
                                         Text("Loading data...", Modifier.padding(16.dp))
                                     }
                                 }
@@ -182,9 +186,44 @@ fun CardsScreen(
                     )
                 },
                 onClick = {
-                    val currentCard = uiState.currentCard!!
-                    viewModel.deleteCard(currentCard.id!!)
+                    viewModel.displayEliminateCardMessage()
                 })
+
+            if (uiState.eliminateCardMessage){
+                 val currentCard = uiState.currentCard!!
+
+                Dialog(onDismissRequest = { viewModel.displayEliminateCardMessage()}) {
+                    Surface(
+                        shape = shapes.medium,
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
+                                style = typography.bodyMedium,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                            Row{
+                                Button(onClick = { viewModel.displayEliminateCardMessage()},
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                ) {
+                                    Text(stringResource(id = R.string.cancel),
+                                    )
+                                }
+                                Button(onClick = {
+                                    viewModel.displayEliminateCardMessage()
+                                    viewModel.deleteCard(currentCard.id!!)
+                                }) {
+                                    Text(stringResource(id = R.string.confirm))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

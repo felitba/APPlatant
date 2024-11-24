@@ -33,4 +33,6 @@
     <string name="error_invalid_amount">Monto invalido. Use numeros positivos.</string>
     <string name="icono">Icono de tarjeta</string>
     <string name="confirm_logout">Estas seguro que quieres cerrar sesion</string>
+    <string name="confirm_card_ends_in">Confirmar la eliminacion de la tarjeta que termina en</string>
+
 </resources>

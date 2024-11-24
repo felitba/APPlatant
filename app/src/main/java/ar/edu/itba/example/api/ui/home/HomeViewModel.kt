@@ -103,13 +103,6 @@ class HomeViewModel(
 
     /* Cards Section */
 
-//    fun getCards() = runOnViewModelScope(
-//        {
-//            walletRepository.getCards()
-//        },
-//        { state, response -> state.copy(cards = response) }
-//    )
-
     fun addCard(card: Card) = runOnViewModelScope(
         {
             walletRepository.addCard(card)
@@ -135,6 +128,13 @@ class HomeViewModel(
     fun setCurrentCard(card: Card) = runOnViewModelScope(
         {
             _uiState.update { currentState -> currentState.copy(currentCard = card) }
+        },
+        { state, _ -> state }
+    )
+
+    fun displayEliminateCardMessage() = runOnViewModelScope(
+        {
+            _uiState.update { currentState -> currentState.copy(eliminateCardMessage = !currentState.eliminateCardMessage) }
         },
         { state, _ -> state }
     )

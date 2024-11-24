@@ -94,14 +94,11 @@ fun HomeScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                //TODO: add current user name.
                                 text = stringResource(id = R.string.confirm_logout)+ " "+ uiState.currentUser?.firstName + " " + uiState.currentUser?.lastName + "?",
                                 style = typography.bodyMedium,
-//                                color = colorScheme.error,
                                 modifier = Modifier.padding(16.dp)
                             )
-                            Row(
-                            ){
+                            Row{
                                 Button(onClick = { viewModel.logOutMessageDisplays()},
                                     modifier = Modifier.padding(horizontal = 16.dp)
                                 ) {
@@ -129,7 +126,6 @@ fun HomeScreen(
                 Text(
                     text = stringResource(id = R.string.balance_amount),
                     modifier = Modifier
-                        //TODO: cambiar el padding con Theme.kt.
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         .background(colorScheme.onBackground),
                     fontSize = typography.bodyMedium.fontSize,
@@ -312,11 +308,10 @@ fun HomeScreen(
                         },
                         displayText = true
                     )
-                    //TODO: definir si vamos a implementar cobrar o no.
                     ActionButton(
                         resId = R.string.charge,
                         onClick = {
-                            //
+                            //TODO: definir si vamos a implementar cobrar o no.
                         },
                         icon = {
                             Icon(
