@@ -49,7 +49,7 @@ fun LoginForm(
     viewModel: HomeViewModel,
     onHomeNavigate: () -> Unit,
     onRecoverPasswordNavigate: () -> Unit,
-    onRegisterNavigate: () -> Unit
+    onRegisterNavigate: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -161,7 +161,7 @@ fun LoginForm(
                     enabled = true,
                     onClick = {
                         viewModel.login(username, password)
-                        if (uiState.isAuthenticated) {
+                        if (uiState.error == null) {
                             username = ""
                             password = ""
                             isPasswordVisible = false
