@@ -10,36 +10,41 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ar.edu.itba.example.api.R
-import ar.edu.itba.example.api.data.model.Card
-import ar.edu.itba.example.api.data.model.CardType
-import ar.edu.itba.example.api.ui.components.ActionButton
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import ar.edu.itba.example.api.R
+import ar.edu.itba.example.api.data.model.Card
+import ar.edu.itba.example.api.data.model.CardType
+import ar.edu.itba.example.api.ui.components.ActionButton
 import ar.edu.itba.example.api.ui.components.AdaptiveCard
 import kotlin.random.Random
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsScreen(
     viewModel: HomeViewModel
@@ -50,39 +55,40 @@ fun CardsScreen(
     val isTablet = configuration.screenWidthDp > 600
     val gridColumns = if (isTablet) GridCells.Fixed(2) else GridCells.Fixed(1)
 
-
     Box(
         modifier = Modifier
-                    .fillMaxSize()
-                     .padding(16.dp)
-                    .background(color = colorScheme.background)
-        ,
+            .fillMaxSize()
+            .background(color = colorScheme.background)
     ) {
-        //Title Section.
+
+        // TopAppBar Section.
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(id = R.string.cards),
+                    color = colorScheme.secondary,
+                    fontSize = 36.sp,
+                )
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = colorScheme.onBackground
+            ),
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Content Section.
         Column(
             modifier = Modifier
-                .background(color = colorScheme.onBackground)
-                .padding(top = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(top = 88.dp)
+                .background(color = colorScheme.background)
         ) {
-            if(uiState.cards != null){
-            Text(
-                text = stringResource(id = R.string.cards),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                color = colorScheme.secondary,
-                fontSize = 36.sp,
-            )
-                }
-            Column(
-                modifier = Modifier
-                    .background(color = colorScheme.background)
-                    .padding(top = 24.dp, bottom = 12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            ) {
-
-                if (uiState.cards != null) {
+            if (uiState.cards != null) {
+                Column(
+                    modifier = Modifier
+                        .background(color = colorScheme.background)
+                        .padding(top = 24.dp, bottom = 12.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
                     val mediumPadding = dimensionResource(R.dimen.medium_padding)
 
@@ -100,19 +106,24 @@ fun CardsScreen(
                         columns = gridColumns,
                         userScrollEnabled = true,
                         state = lazyGridState,
-                    )
-                    {
+                    ) {
                         when {
-                            //NOTE: Ignorar este warning. Si que puede ser NULL: cuando esta fetcheando datos.
                             uiState.cards == null -> {
                                 item {
-                                    Text(text= stringResource(id = R.string.loading), Modifier.padding(16.dp))
+                                    Text(text = stringResource(id = R.string.loading),
+                                        modifier = Modifier
+                                            .background(color = colorScheme.background)
+                                            .padding(25.dp),
+                                        fontSize = 36.sp,
+                                        color = colorScheme.onBackground
+                                    )
                                 }
                             }
 
                             uiState.cards!!.isEmpty() -> {
-//                                item {
-//                                }
+                                item {
+                                    // Placeholder for empty list
+                                }
                             }
 
                             else -> {
@@ -123,23 +134,40 @@ fun CardsScreen(
                                 }
                             }
                         }
-                        item {
-                            Text(
-                                text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                                fontSize = typography.bodyMedium.fontSize
-                            )
+                        if (!isTablet) {
+                            item {
+                                Text(
+                                    text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                                    fontSize = 24.sp
+                                )
+                            }
                         }
                     }
+                    if (isTablet) {
+                        Text(
+                            text = "${stringResource(R.string.total_cards)} ${uiState.cards!!.size}",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                            fontSize = 24.sp
+                        )
+                    }
 
-                } else {
-                    Text(text= stringResource(id = R.string.loading), Modifier.padding(16.dp))
                 }
-            }
+            } else {
+                Text(text = stringResource(id = R.string.loading),
+                    modifier = Modifier
+                        .background(color = colorScheme.background)
+                        .padding(25.dp),
+                    fontSize = 36.sp,
+                    color = colorScheme.onBackground
+                )            }
         }
 
+        // Error Section.
         if (uiState.error != null) {
             Text(
                 text = "${uiState.error!!.code} - ${uiState.error!!.message}",
@@ -149,12 +177,13 @@ fun CardsScreen(
                 fontSize = 18.sp
             )
         }
+
+        // Action Buttons Section
         if (uiState.cards != null) {
             Column(
                 modifier = Modifier.align(Alignment.BottomEnd),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-
                 // NOTE: This add button is only for testing purposes.
                 ActionButton(
                     resId = R.string.add_card,
@@ -181,6 +210,7 @@ fun CardsScreen(
                         )
                         viewModel.addCard(card)
                     })
+
                 ActionButton(
                     resId = R.string.delete_card,
                     enabled = uiState.canDeleteCard,
@@ -212,9 +242,9 @@ fun CardsScreen(
                             ) {
                                 Text(
                                     text = stringResource(id = R.string.confirm_eliminate_card) + " : " + uiState.currentCard!!.number,
-                                    style = typography.bodyMedium,
+                                    style = typography.bodySmall,
                                     modifier = Modifier.padding(16.dp),
-                                    fontSize = 24.sp,
+                                    fontSize = 16.sp,
                                 )
                                 Row {
                                     Button(

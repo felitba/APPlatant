@@ -29,7 +29,6 @@ fun ActionButton(
         shape = RoundedCornerShape(10.dp),
         content = {
             Column {
-                //TODO: se podria mejorar el estilo de codigo.
                 if (icon != null) {
                     icon()
                     if (displayText == true) {
