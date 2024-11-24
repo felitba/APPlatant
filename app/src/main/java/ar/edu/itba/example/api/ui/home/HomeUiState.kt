@@ -2,6 +2,7 @@ package ar.edu.itba.example.api.ui.home
 
 import ar.edu.itba.example.api.data.model.Card
 import ar.edu.itba.example.api.data.model.Error
+import ar.edu.itba.example.api.data.model.Payment
 import ar.edu.itba.example.api.data.model.User
 import ar.edu.itba.example.api.data.model.WalletDetail
 
@@ -15,6 +16,9 @@ data class HomeUiState(
     val cards: List<Card>? = emptyList(),
     val currentCard: Card? = null,
     val isWriting: Boolean = false,
+
+    val isPaymentInProgress: Boolean = false,
+    val payments: List<Payment>? = emptyList(),
     val errorMessage: Boolean = false,
     val aboutToLogOut: Boolean = false,
     val eliminateCardMessage: Boolean = false
@@ -24,3 +28,5 @@ val HomeUiState.canGetCurrentUser: Boolean get() = isAuthenticated
 //val HomeUiState.canGetAllCards: Boolean get() = isAuthenticated
 val HomeUiState.canAddCard: Boolean get() = isAuthenticated
 val HomeUiState.canDeleteCard: Boolean get() = isAuthenticated && currentCard != null
+
+

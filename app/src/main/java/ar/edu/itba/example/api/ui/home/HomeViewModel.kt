@@ -11,6 +11,8 @@ import ar.edu.itba.example.api.data.repository.UserRepository
 import ar.edu.itba.example.api.data.repository.WalletRepository
 import ar.edu.itba.example.api.SessionManager
 import ar.edu.itba.example.api.data.model.Card
+import ar.edu.itba.example.api.data.model.Payment
+import ar.edu.itba.example.api.data.repository.PaymentRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +26,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     sessionManager: SessionManager,
     private val userRepository: UserRepository,
-    private val walletRepository: WalletRepository
+    private val walletRepository: WalletRepository,
+    private val paymentRepository: PaymentRepository
 ) : ViewModel() {
 
     private var walletDetailStreamJob: Job? = null
@@ -158,6 +161,25 @@ class HomeViewModel(
         ) { state, response -> state.copy(cards = response) }
     }
 
+    /*  Payment   */
+
+    fun fetchPayments(refresh: Boolean = false) = runOnViewModelScope(
+        {
+            paymentRepository.getUserPayments(refresh)
+        },
+        { state, response -> state.copy(payments = response) }
+    )
+
+    fun makePayment(payment: Payment) = runOnViewModelScope(
+        {
+            paymentRepository.makePayment(payment)
+        },
+        { state, _ -> state.copy(isPaymentInProgress = false) }
+    ).also {
+        _uiState.update { it.copy(isPaymentInProgress = true) }
+    }
+
+
     private fun <T> collectOnViewModelScope(
         flow: Flow<T>,
         updateState: (HomeUiState, T) -> HomeUiState
@@ -202,7 +224,9 @@ class HomeViewModel(
                 return HomeViewModel(
                     application.sessionManager,
                     application.userRepository,
-                    application.walletRepository) as T
+                    application.walletRepository,
+                    application.paymentRepository
+                ) as T
             }
         }
     }
