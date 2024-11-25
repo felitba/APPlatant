@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.ui.home
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +21,9 @@ import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
@@ -44,7 +47,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.ui.components.ActionButton
+import java.text.SimpleDateFormat
+import java.util.Locale
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
@@ -330,10 +336,51 @@ fun HomeScreen(
                         displayText = true
                     )
                 }
-                if (uiState.payments!=null){
-                    Text(
-                        text=("${uiState.payments!!.size} payments"),
-                        color = colorScheme.secondary)
+//                if (uiState.payments!=null){
+//                    Text(
+//                        text=("${uiState.payments!!.size} payments"),
+//                        color = colorScheme.secondary)
+//                }
+                //TODO: seguir desde aca!!
+                if (uiState.payments != null) {
+                    val timeFormat =
+                        SimpleDateFormat("hh:mm a", Locale.getDefault()) // Format for the time
+
+                    Column {
+                        uiState.payments!!.forEach { payment ->
+                            val isPositive = payment.amount >= 0
+                            val formattedTime = payment.createdAt?.let { timeFormat.format(it) } ?: "Unknown Time"
+
+                            // Row for each payment
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                // Display payment type and description
+                                Column {
+                                    Text(
+                                        text = payment.description ?: payment.type.toString(),
+                                        style = MaterialTheme.typography.bodySmall
+                                    )
+                                    Text(
+                                        text = formattedTime,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = colorScheme.secondary
+                                    )
+                                }
+                                Column {
+                                    // Display amount
+                                    Text(
+                                        text = (if (isPositive) "+ $" else "- $") + (payment.amount),
+                                        color = if (isPositive) (0xFF00C853) else (0xFFD50000) // Green for positive, Red for negative
+                                    )
+                                }
+                            }
+                            Divider() // Add a divider between transactions
+                    }
+                    }
                 }
             }
             if (uiState.error != null) {
