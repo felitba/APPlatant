@@ -36,7 +36,7 @@ fun AppNavGraph(
                 onPayNavigate = {
                     navController.navigate(AppDestinations.PAY.route) {
                         popUpTo(AppDestinations.HOME.route) {
-                            inclusive = false
+                            inclusive = true
                         }
                     }
             })
