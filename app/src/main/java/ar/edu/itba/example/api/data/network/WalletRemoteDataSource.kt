@@ -28,7 +28,6 @@ class WalletRemoteDataSource(
         }
     }
 
-    //Testear esta funcion.
     val walletCardsStream: Flow<List<NetworkCard>> = flow {
         while (true) {
             val walletCards = handleApiResponse {
@@ -38,10 +37,6 @@ class WalletRemoteDataSource(
             delay(DELAY)
         }
     }
-
-//    suspend fun getCards() = handleApiResponse {
-//        walletApiService.getCards()
-//    }
 
     suspend fun addCard(card: NetworkCard) = handleApiResponse {
         walletApiService.addCard(card)
@@ -54,6 +49,6 @@ class WalletRemoteDataSource(
 
 
     companion object {
-        const val DELAY: Long = 10000
+        const val DELAY: Long = 5000
     }
 }

@@ -32,6 +32,7 @@ class HomeViewModel(
 
     private var walletDetailStreamJob: Job? = null
     private var walletCardsStreamJob: Job? = null
+    private var paymentStreamJob: Job? = null
     private val _uiState = MutableStateFlow(HomeUiState(isAuthenticated = sessionManager.loadAuthToken() != null))
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
@@ -49,6 +50,8 @@ class HomeViewModel(
             userRepository.login(username, password)
             observeWalletDetailStream()
             observeWalletCardsStream()
+            //TODO: si anda mal mutear esta linea. 
+            observePaymentStream()
         },
         { state, _ -> state.copy(isAuthenticated = true) }
     )
@@ -185,6 +188,12 @@ class HomeViewModel(
         { state, _ -> state.copy(isPaymentInProgress = false) }
     ).also {
         _uiState.update { it.copy(isPaymentInProgress = true) }
+    }
+
+    private fun observePaymentStream() {
+        paymentStreamJob = collectOnViewModelScope(
+            paymentRepository.paymentsStream
+        ) { state, response -> state.copy(payments = response) }
     }
 
 

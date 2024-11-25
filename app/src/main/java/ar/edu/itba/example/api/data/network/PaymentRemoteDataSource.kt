@@ -2,6 +2,7 @@ package ar.edu.itba.example.api.data.network
 
 import ar.edu.itba.example.api.data.network.api.PaymentApiService
 import ar.edu.itba.example.api.data.network.model.NetworkPayment
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -46,9 +47,12 @@ class PaymentRemoteDataSource(
     // Example: A real-time flow for streaming user payments (optional)
     val userPaymentsStream: Flow<List<NetworkPayment>> = flow {
         while (true) {
-            val payments = getUserPayments()
+            val payments = handleApiResponse {
+                paymentApiService.getUserPayments()
+
+            }
             emit(payments)
-            kotlinx.coroutines.delay(10000L) // Fetch every 10 seconds
+            delay(5000)
         }
     }
 }

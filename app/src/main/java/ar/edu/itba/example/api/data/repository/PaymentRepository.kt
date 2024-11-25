@@ -13,7 +13,8 @@ class PaymentRepository(
     private val paymentsMutex = Mutex()
     private var cachedPayments: List<Payment> = emptyList()
 
-    val paymentsStream: Flow<List<Payment>> = remoteDataSource.userPaymentsStream.map { networkPayments ->
+    val paymentsStream: Flow<List<Payment>> =
+        remoteDataSource.userPaymentsStream.map { networkPayments ->
         networkPayments.map { it.asModel() }
     }
 
