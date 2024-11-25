@@ -132,7 +132,7 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
                         .background(colorScheme.onBackground),
-                    fontSize = 36.sp,
+                    fontSize = 24.sp,
                     color = colorScheme.secondary
                 )
                 Row {
