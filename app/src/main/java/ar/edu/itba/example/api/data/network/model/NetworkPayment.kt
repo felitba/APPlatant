@@ -18,7 +18,7 @@ class NetworkPayment(
     var receiverBalanceAfter:  Float?=null,
 
     var pending: Boolean?=null,
-    var linkUuid: Boolean?=null,
+    var linkUuid: String?=null,
     var createdAt: String?=null,
     var updatedAt: String?=null,
     var card: NetworkCard?=null,
