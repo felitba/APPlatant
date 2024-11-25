@@ -7,6 +7,11 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Serializable
+data class PaymentsResponse(
+    val payments: List<NetworkPayment>
+)
+
+@Serializable
 class NetworkPayment(
     var id: Int?=null,
     var type: String,

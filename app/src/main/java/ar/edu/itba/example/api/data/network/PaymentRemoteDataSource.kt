@@ -44,15 +44,34 @@ class PaymentRemoteDataSource(
         }
     }
 
-    val userPaymentsStream: Flow<List<NetworkPayment>> = flow {
+    val paymentsStream: Flow<List<NetworkPayment>> = flow {
         while (true) {
             val payments = handleApiResponse {
-                paymentApiService.getUserPayments()
-
+                paymentApiService.getUserPayments(
+                    1,
+                    "ASC",
+                    null,
+                    null,
+                    range = null,
+                    source = "PAYER",
+                    cardId = null
+                )
             }
-            emit(payments)
+
+                val paymentsReceived = handleApiResponse {
+                    paymentApiService.getUserPayments(
+                        1,
+                        "ASC",
+                        null,
+                        null,
+                        range = null,
+                        source = "RECEIVER",
+                        cardId = null
+                    )
+                }
+            emit(payments.payments +paymentsReceived.payments)
             delay(DELAY)
-        }
+            }
     }
 
     companion object {

@@ -14,9 +14,10 @@ class PaymentRepository(
     private var cachedPayments: List<Payment> = emptyList()
 
     val paymentsStream: Flow<List<Payment>> =
-        remoteDataSource.userPaymentsStream.map { list ->
-        list.map { it.asModel() }
-    }
+        remoteDataSource.paymentsStream.map { response ->
+            response.map { it.asModel() }
+        }
+
 
     suspend fun makePayment(payment: Payment) {
         remoteDataSource.makePayment(payment.asNetworkModel())
