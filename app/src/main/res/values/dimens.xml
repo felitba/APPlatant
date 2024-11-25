@@ -5,7 +5,8 @@
     <dimen name="medium_padding">16dp</dimen>
     <dimen name="large_padding">24dp</dimen>
 
-    <dimen name="image_medium">128dp</dimen>
+    <dimen name="image_small">128dp</dimen>
+    <dimen name="image_medium">200dp</dimen>
     <dimen name="image_large">230dp</dimen>
 
     <dimen name="rounded_corner">10dp</dimen>

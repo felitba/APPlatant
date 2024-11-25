@@ -78,6 +78,20 @@ class HomeViewModel(
         { state, response -> state.copy(currentUser = response) }
     )
 
+    fun registerUser(firstName: String, lastName: String, birthDate: String, email: String, password: String) = runOnViewModelScope(
+        {
+            userRepository.registerUser(firstName, lastName, birthDate, email, password)
+        },
+        { state, _ -> state }
+    )
+
+    fun verify(code: String) = runOnViewModelScope(
+        {
+            userRepository.verify(code)
+        },
+        { state, _ -> state }
+    )
+
     /* Deposit Section */
 
     fun deposit(amount: Double) = runOnViewModelScope(

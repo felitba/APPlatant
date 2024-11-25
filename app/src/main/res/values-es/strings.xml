@@ -53,6 +53,19 @@
     <string name="loading">Cargando…</string>
     <string name = "no_cards_available">No hay tarjetas disponibles.</string>
     <string name="total_cards"> Total de Tarjetas:</string>
-
+    <string name="mandatory_field_error">Este campo es obligatorio</string>
+    <string name="no_match_password">Las contraseñas no coinciden</string>
+    <string name="first_name">Nombre</string>
+    <string name="last_name">Apellido</string>
+    <string name="birth_date">Fecha de Nacimiento</string>
+    <string name="Email">Email</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="failed_register">Ah ocurrido un error</string>
+    <string name="failed_register_dialog">Ah ocurrido un error inesperado. Por favor intenet de nuevo.</string>
+    <string name="verify_mail">Verifique su Email</string>
+    <string name="verify_mail_dialog">Se lo a registrado exitosamente. Porfavor introdusca el codigo enviando al Email provisto</string>
+    <string name="code">Codigo</string>
+    <string name="incorrect_code">El codigo es incorrecto</string>
+    <string name="error_code">Ah habido un error inseperado</string>
 
 </resources>
