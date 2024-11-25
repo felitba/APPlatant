@@ -40,6 +40,7 @@ class HomeViewModel(
         if (uiState.value.isAuthenticated) {
             observeWalletDetailStream()
             observeWalletCardsStream()
+            observePaymentStream()
         }
     }
 
@@ -59,6 +60,8 @@ class HomeViewModel(
     fun logout() = runOnViewModelScope(
         {
             walletDetailStreamJob?.cancel()
+            walletCardsStreamJob?.cancel()
+            paymentStreamJob?.cancel()
             userRepository.logout()
         },
         { state, _ ->
@@ -188,12 +191,12 @@ class HomeViewModel(
 
     /*  Payment   */
 
-    fun fetchPayments(refresh: Boolean = false) = runOnViewModelScope(
-        {
-            paymentRepository.getUserPayments(refresh)
-        },
-        { state, response -> state.copy(payments = response) }
-    )
+//    fun fetchPayments(refresh: Boolean = false) = runOnViewModelScope(
+//        {
+//            paymentRepository.getUserPayments(refresh)
+//        },
+//        { state, response -> state.copy(payments = response) }
+//    )
 
     fun makePayment(payment: Payment) = runOnViewModelScope(
         {

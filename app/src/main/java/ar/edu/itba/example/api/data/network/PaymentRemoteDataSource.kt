@@ -15,16 +15,16 @@ class PaymentRemoteDataSource(
             paymentApiService.makePayment(payment)
         }
     }
-
-    suspend fun getUserPayments(
-        page: Int? = 1,
-        direction: String? = "ASC",
-        pending: Boolean? = null
-    ): List<NetworkPayment> {
-        return handleApiResponse {
-            paymentApiService.getUserPayments(page, direction, pending)
-        }
-    }
+//
+//    suspend fun getUserPayments(
+//        page: Int? = 1,
+//        direction: String? = "ASC",
+//        pending: Boolean? = null
+//    ): List<NetworkPayment> {
+//        return handleApiResponse {
+//            paymentApiService.getUserPayments(page, direction, pending)
+//        }
+//    }
 
     suspend fun getPaymentById(paymentId: Int): NetworkPayment {
         return handleApiResponse {
@@ -44,7 +44,6 @@ class PaymentRemoteDataSource(
         }
     }
 
-    // Example: A real-time flow for streaming user payments (optional)
     val userPaymentsStream: Flow<List<NetworkPayment>> = flow {
         while (true) {
             val payments = handleApiResponse {
@@ -52,7 +51,11 @@ class PaymentRemoteDataSource(
 
             }
             emit(payments)
-            delay(5000)
+            delay(DELAY)
         }
+    }
+
+    companion object {
+        const val DELAY: Long = 5000
     }
 }

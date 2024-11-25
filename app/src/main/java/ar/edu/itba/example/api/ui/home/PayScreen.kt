@@ -251,7 +251,7 @@ fun PayScreen(viewModel: HomeViewModel) {
                 onClick = {
                     viewModel.makePayment(
                         Payment(
-                            amount = valueToPay.toDouble(),
+                            amount = valueToPay.toFloat(),
                             description = descripcion,
                             type = tipodePago,
                             cardId = selectedCard?.id,

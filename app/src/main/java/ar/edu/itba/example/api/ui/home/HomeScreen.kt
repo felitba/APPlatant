@@ -330,6 +330,11 @@ fun HomeScreen(
                         displayText = true
                     )
                 }
+                if (uiState.payments!=null){
+                    Text(
+                        text=("${uiState.payments!!.size} payments"),
+                        color = colorScheme.secondary)
+                }
             }
             if (uiState.error != null) {
                 Text(

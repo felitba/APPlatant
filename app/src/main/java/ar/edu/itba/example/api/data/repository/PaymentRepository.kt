@@ -14,23 +14,23 @@ class PaymentRepository(
     private var cachedPayments: List<Payment> = emptyList()
 
     val paymentsStream: Flow<List<Payment>> =
-        remoteDataSource.userPaymentsStream.map { networkPayments ->
-        networkPayments.map { it.asModel() }
+        remoteDataSource.userPaymentsStream.map { list ->
+        list.map { it.asModel() }
     }
 
     suspend fun makePayment(payment: Payment) {
         remoteDataSource.makePayment(payment.asNetworkModel())
     }
-
-    suspend fun getUserPayments(refresh: Boolean = false): List<Payment> {
-        if (refresh || cachedPayments.isEmpty()) {
-            val payments = remoteDataSource.getUserPayments().map { it.asModel() }
-            paymentsMutex.withLock {
-                cachedPayments = payments
-            }
-        }
-        return paymentsMutex.withLock { cachedPayments }
-    }
+//
+//    suspend fun getUserPayments(refresh: Boolean = false): List<Payment> {
+//        if (refresh || cachedPayments.isEmpty()) {
+//            val payments = remoteDataSource.getUserPayments().map { it.asModel() }
+//            paymentsMutex.withLock {
+//                cachedPayments = payments
+//            }
+//        }
+//        return paymentsMutex.withLock { cachedPayments }
+//    }
 
     suspend fun getPaymentById(paymentId: Int): Payment {
         return remoteDataSource.getPaymentById(paymentId).asModel()

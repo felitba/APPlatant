@@ -11,9 +11,10 @@ interface PaymentApiService {
 
     @GET("payment")
     suspend fun getUserPayments(
-        @Query("page") page: Int? = 1,
-        @Query("direction") direction: String? = "ASC",
-        @Query("pending") pending: Boolean? = null
+//        @Query("page") page: Int? = 1,
+//        @Query("direction") direction: String? = "ASC",
+//        @Query("pending") pending: Boolean? = false,
+//        @Query("type") type: String? = "BALANCE",
     ): Response<List<NetworkPayment>>
 
     @GET("payment/{paymentId}")
