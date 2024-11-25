@@ -270,7 +270,7 @@ fun PayScreen(viewModel: HomeViewModel) {
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
                     .padding(16.dp),
-                enabled = valueToPay.isNotEmpty() && cvu.isNotEmpty() && descripcion.isNotEmpty()Mini
+                enabled = valueToPay.isNotEmpty() && cvu.isNotEmpty() && descripcion.isNotEmpty()
             ) {
                 Text(
                     text = stringResource(id = R.string.pay),
