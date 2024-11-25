@@ -13,6 +13,7 @@ import ar.edu.itba.example.api.ui.home.HomeViewModel
 import ar.edu.itba.example.api.ui.home.ProfileScreen
 import ar.edu.itba.example.api.ui.home.CardsScreen
 import ar.edu.itba.example.api.ui.home.LoginScreen
+import ar.edu.itba.example.api.ui.home.RegisterView
 
 @Composable
 fun AppNavGraph(
@@ -59,7 +60,24 @@ fun AppNavGraph(
                     }
                 },
                 onRecoverPasswordNavigate = {},
-                onRegisterNavigate = {}
+                onRegisterNavigate = {
+                    navController.navigate(AppDestinations.REGISTER.route)
+                }
+            )
+        }
+        composable(route = AppDestinations.REGISTER.route) {
+            RegisterView(
+                viewModel = viewModel,
+                onCancelNavigate = {
+                    navController.navigate(AppDestinations.LOGIN.route) {
+                        popUpTo(AppDestinations.LOGIN.route) { inclusive = true }
+                    }
+                },
+                onSubmitNavigate = {
+                    navController.navigate(AppDestinations.LOGIN.route) {
+                        popUpTo(AppDestinations.LOGIN.route) { inclusive = true }
+                    }
+                }
             )
         }
     }

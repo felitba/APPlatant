@@ -3,6 +3,7 @@ package ar.edu.itba.example.api.data.network
 import ar.edu.itba.example.api.data.network.api.UserApiService
 import ar.edu.itba.example.api.data.network.model.NetworkCredentials
 import ar.edu.itba.example.api.SessionManager
+import ar.edu.itba.example.api.data.network.model.NetworkRegisterUser
 import ar.edu.itba.example.api.data.network.model.NetworkUser
 
 class UserRemoteDataSource(
@@ -24,5 +25,16 @@ class UserRemoteDataSource(
 
     suspend fun getCurrentUser(): NetworkUser {
         return handleApiResponse { userApiService.getCurrentUser() }
+    }
+
+    suspend fun registerUser(firstName: String, lastName: String, birthDate: String, email: String, password: String): NetworkUser {
+        val response = handleApiResponse {
+            userApiService.registerUser(NetworkRegisterUser(firstName, lastName, email, birthDate, password))
+        }
+        return response
+    }
+
+    suspend fun verify(code: String): NetworkUser {
+        return handleApiResponse { userApiService.verify(code) }
     }
 }

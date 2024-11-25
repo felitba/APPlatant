@@ -23,5 +23,6 @@ enum class AppDestinations(
     PAY(R.string.pay, Icons.AutoMirrored.Outlined.Send, R.string.pay, "pay"),
     PROFILE(R.string.profile, Icons.Default.AccountBox, R.string.profile, "profile"),
     CARDS(R.string.cards, Icons.Outlined.CreditCard, R.string.cards, "cards"),
-    LOGIN(R.string.login, Icons.Outlined.AccountCircle , R.string.login, "login"),
+    LOGIN(R.string.login, Icons.Outlined.Person, R.string.login, "login"),
+    REGISTER(R.string.signin, Icons.Outlined.Person, R.string.signin, "signin")
 }

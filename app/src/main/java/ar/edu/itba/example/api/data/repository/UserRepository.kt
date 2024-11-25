@@ -22,6 +22,14 @@ class UserRepository(
         remoteDataSource.logout()
     }
 
+    suspend fun registerUser(firstName: String, lastName: String, birthDate: String, email: String, password: String) {
+        remoteDataSource.registerUser(firstName, lastName, birthDate, email, password)
+    }
+
+    suspend fun verify(code: String) {
+        remoteDataSource.verify(code)
+    }
+
     suspend fun getCurrentUser(refresh: Boolean) : User? {
         if (refresh || currentUser == null) {
             val result = remoteDataSource.getCurrentUser()

@@ -50,9 +50,21 @@
     <string name="profile_picture">User Photo</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="loading">Loading…</string>
-    <string name = "no_cards_available">No cards available</string>
-    <string name = "total_cards"> Total Cards:</string>
-
-
+    <string name="no_cards_available">No cards available</string>
+    <string name="total_cards"> Total Cards:</string>
+    <string name="mandatory_field_error">This field is required</string>
+    <string name="no_match_password">Passwords do not match</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birth_date">Birth Date</string>
+    <string name="Email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="failed_register">An error has occurred</string>
+    <string name="failed_register_dialog">An unexpected error has occurred. Please try again.</string>
+    <string name="verify_mail">Verify your Email</string>
+    <string name="verify_mail_dialog">You have been registered successfully. Please introduce the code sent to the submitted Email</string>
+    <string name="code">Code</string>
+    <string name="incorrect_code">The code is incorrect</string>
+    <string name="error_code">There has been an unexpected error</string>
 
 </resources>
