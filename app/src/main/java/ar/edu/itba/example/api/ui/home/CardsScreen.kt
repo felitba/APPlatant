@@ -63,13 +63,7 @@ fun CardsScreen(
 
         // TopAppBar Section.
         TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = R.string.cards),
-                    color = colorScheme.secondary,
-                    fontSize = 36.sp,
-                )
-            },
+            title = {},
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = colorScheme.onBackground
             ),

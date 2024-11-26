@@ -6,10 +6,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -22,6 +25,7 @@ import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -39,7 +43,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -47,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import ar.edu.itba.example.api.R
 import ar.edu.itba.example.api.ui.components.ActionButton
+import ar.edu.itba.example.api.ui.components.MovementListItem
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -336,50 +343,20 @@ fun HomeScreen(
                         displayText = true
                     )
                 }
-//                if (uiState.payments!=null){
-//                    Text(
-//                        text=("${uiState.payments!!.size} payments"),
-//                        color = colorScheme.secondary)
-//                }
-                //TODO: seguir desde aca!!
+
                 if (uiState.payments != null) {
-                    val timeFormat =
-                        SimpleDateFormat("hh:mm a", Locale.getDefault()) // Format for the time
-
-                    Column {
+                    Column(
+                        modifier = Modifier
+                            .background(MaterialTheme.colorScheme.background)
+                    ) {
                         uiState.payments!!.forEach { payment ->
-                            val isPositive = payment.amount >= 0
-                            val formattedTime = payment.createdAt?.let { timeFormat.format(it) } ?: "Unknown Time"
-
-                            // Row for each payment
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 8.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                // Display payment type and description
-                                Column {
-                                    Text(
-                                        text = payment.description ?: payment.type.toString(),
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-                                    Text(
-                                        text = formattedTime,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = colorScheme.secondary
-                                    )
-                                }
-                                Column {
-                                    // Display amount
-                                    Text(
-                                        text = (if (isPositive) "+ $" else "- $") + (payment.amount),
-                                        color = if (isPositive) (0xFF00C853) else (0xFFD50000) // Green for positive, Red for negative
-                                    )
-                                }
+                            val desc = if (payment.description == null) {
+                                ""
+                            } else {
+                                payment.description.toString()
                             }
-                            Divider() // Add a divider between transactions
-                    }
+                            MovementListItem(payment.amount, desc)
+                        }
                     }
                 }
             }

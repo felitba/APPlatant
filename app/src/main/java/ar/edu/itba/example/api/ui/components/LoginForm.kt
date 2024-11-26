@@ -154,7 +154,7 @@ fun LoginForm(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding( bottom = dimensionResource(R.dimen.medium_padding))
+                    .padding( bottom = dimensionResource(R.dimen.small_padding))
             ) {
                 ActionButton(
                     resId = R.string.login,
@@ -179,40 +179,7 @@ fun LoginForm(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.medium_padding))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = dimensionResource(R.dimen.small_padding)),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = stringResource(R.string.forgot_password),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = dimensionResource(R.dimen.small_padding)),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = stringResource(R.string.recover_password),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.clickable {
-                            onRecoverPasswordNavigate()
-                        }
-                    )
-                }
-            }
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(dimensionResource(R.dimen.medium_padding))
+                    .padding(dimensionResource(R.dimen.small_padding))
             ) {
                 Column(
                     modifier = Modifier
@@ -234,7 +201,7 @@ fun LoginForm(
                     Text(
                         text = stringResource(R.string.signin),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primary,
+                        color = MaterialTheme.colorScheme.tertiary,
                         modifier = Modifier.clickable {
                             onRegisterNavigate()
                         }

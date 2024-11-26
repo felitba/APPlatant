@@ -1,5 +1,6 @@
 package ar.edu.itba.example.api.data.network.api
 
+import ar.edu.itba.example.api.data.network.model.NetworkCode
 import ar.edu.itba.example.api.data.network.model.NetworkCredentials
 import ar.edu.itba.example.api.data.network.model.NetworkRegisterUser
 import ar.edu.itba.example.api.data.network.model.NetworkToken
@@ -22,6 +23,6 @@ interface UserApiService {
     @POST("user")
     suspend fun registerUser(@Body user: NetworkRegisterUser): Response<NetworkUser>
 
-    @POST("verify")
-    suspend fun verify(@Body code: String): Response<NetworkUser>
+    @POST("user/verify")
+    suspend fun verify(@Body code: NetworkCode): Response<NetworkUser>
 }

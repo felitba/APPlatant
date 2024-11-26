@@ -63,7 +63,9 @@
     <string name="failed_register">Ah ocurrido un error</string>
     <string name="failed_register_dialog">Ah ocurrido un error inesperado. Por favor intenet de nuevo.</string>
     <string name="verify_mail">Verifique su Email</string>
-    <string name="verify_mail_dialog">Se lo a registrado exitosamente. Porfavor introdusca el codigo enviando al Email provisto</string>
+    <string name="verify_mail_dialog">Si aun no lo a hecho, introdusca el codigo enviado al Email con el que se registro</string>
+    <string name="registered_succersfully">Registrado exitosamente</string>
+    <string name="registered_succersfully_dialog">Se lo a registrado exitosamente. Porfavor recuerde validar su Email</string>
     <string name="code">Codigo</string>
     <string name="incorrect_code">El codigo es incorrecto</string>
     <string name="error_code">Ah habido un error inseperado</string>

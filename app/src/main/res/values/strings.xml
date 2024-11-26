@@ -62,9 +62,11 @@
     <string name="failed_register">An error has occurred</string>
     <string name="failed_register_dialog">An unexpected error has occurred. Please try again.</string>
     <string name="verify_mail">Verify your Email</string>
-    <string name="verify_mail_dialog">You have been registered successfully. Please introduce the code sent to the submitted Email</string>
     <string name="code">Code</string>
     <string name="incorrect_code">The code is incorrect</string>
     <string name="error_code">There has been an unexpected error</string>
+    <string name="verify_mail_dialog">If you haven\'t done it yet, introduce the code sent to the Email used to register</string>
+    <string name="registered_succersfully">Registered succesfully</string>
+    <string name="registered_succersfully_dialog">You have been registered succesfully. Please remember to validate your Email</string>
 
 </resources>

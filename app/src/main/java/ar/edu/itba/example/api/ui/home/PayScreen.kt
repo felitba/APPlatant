@@ -75,30 +75,10 @@ fun PayScreen(viewModel: HomeViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.pay),
-                        fontSize = 40.sp,
-                        color = Color.White,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
-                },
+                title = {},
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.onBackground,
                 ),
-                actions = {
-                    IconButton(
-                        onClick = {/*IR AL PERFIL DE USARIO O ABRIR UN MENU*/ },
-                        modifier = Modifier.padding(end = 12.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.AccountCircle,
-                            contentDescription = stringResource(id = R.string.profile),
-                            tint = Color.White,
-                            modifier = Modifier.size(40.dp)
-                        )
-                    }
-                },
                 scrollBehavior = scrollBehavior
             )
         },
@@ -213,18 +193,6 @@ fun PayScreen(viewModel: HomeViewModel) {
                         shape = RoundedCornerShape(16.dp),
                         modifier = Modifier.weight(1f) // Allow flexibility in layout
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Add space between the text field and icon
-                    IconButton(
-                        onClick = { /* Scan QR Code action */ },
-                        modifier = Modifier.size(48.dp),
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.qr_code),
-                            contentDescription = stringResource(id = R.string.qr),
-                            tint = Color.DarkGray,
-                            modifier = Modifier.size(40.dp)
-                        )
-                    }
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(

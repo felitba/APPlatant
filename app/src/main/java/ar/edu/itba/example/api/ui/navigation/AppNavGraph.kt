@@ -13,7 +13,8 @@ import ar.edu.itba.example.api.ui.home.HomeViewModel
 import ar.edu.itba.example.api.ui.home.ProfileScreen
 import ar.edu.itba.example.api.ui.home.CardsScreen
 import ar.edu.itba.example.api.ui.home.LoginScreen
-import ar.edu.itba.example.api.ui.home.RegisterView
+import ar.edu.itba.example.api.ui.components.RegisterForm
+import ar.edu.itba.example.api.ui.home.RegisterScreen
 
 @Composable
 fun AppNavGraph(
@@ -66,7 +67,7 @@ fun AppNavGraph(
             )
         }
         composable(route = AppDestinations.REGISTER.route) {
-            RegisterView(
+            RegisterScreen(
                 viewModel = viewModel,
                 onCancelNavigate = {
                     navController.navigate(AppDestinations.LOGIN.route) {
